@@ -1,0 +1,230 @@
+//multiselect
+::ng-deep .multiselect-dropdown .dropdown-btn {
+  border: 1.1px solid #cccccc !important;
+  padding: 6.8px 190px !important;
+}
+.dropdown-list {
+  top: -56px !important;
+}
+.dropdown-down {
+  display: none !important;
+  -moz-appearance:none !important; /* Firefox */
+  -webkit-appearance:none !important; /* Safari and Chrome */
+  appearance:none !important;
+}
+select {
+  /* for Firefox */
+  -moz-appearance: none !important;
+  /* for Chrome */
+  -webkit-appearance: none !important;
+}
+select::-ms-expand {
+  display: none !important;
+}
+.icon{
+  color: darkslategrey;
+  margin-top: -22px;
+ margin-right: 7px;
+  float: right !important;
+  /* top: 30px; */
+  font-size: 12px;
+}
+.multiselect-dropdown .dropdown-btn .dropdown-up {
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.9) !important;
+}
+.multiselect-dropdown .dropdown-btn .selected-item {
+  border: 1px solid #337ab7;
+  margin-right: 12px;
+  background: #337ab7;
+  padding: 0 5px;
+  color: #fff;
+  border-radius: 2px 5px !important;
+  float: left;
+  font-size: 8.6px;
+}
+.multiselect-dropdown .dropdown-btn.selected-item {
+  border: 1px solid #337ab7 !important;
+  margin-right: 4px !important;
+  background: #337ab7;
+  padding: 2px 5px !important;
+  color: #fff;
+  border-radius: 2px 5px;
+  float: left;
+}
+.multiselect-dropdown .dropdown-btn {
+  height: 28px !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  padding: 5px 7px !important;
+  margin-bottom: 0;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.multiselect-dropdown.dropdown-btn {
+  padding: 3px 12px !important;
+}
+.multiselect-dropdown .dropdown-btn .selected-item {
+  padding: 0px 2px !important;
+}
+.multiselect-dropdown.dropdown-btn {
+  border: 1px solid #d2d2d2 !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  line-height: 1.2 !important;
+  font-size: 12px !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  line-height: 1.5 !important;
+}
+.multiselect-item-checkbox input[type="checkbox"] + div:before {
+  width: 12px !important;
+  height: 11px !important;
+  margin-top: -7px !important;
+}
+.multiselect-item-checkbox input[type="checkbox"] + div:after {
+  left: 3px !important;
+  width: 7px !important;
+  height: 3px !important;
+  margin-top: -4px !important;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0 0 3px 3px;
+}
+.multiselect-dropdown .dropdown-btn .selected-item {
+  font-size: 10px !important;
+  margin-right: 3px;
+  padding: 0px 1px !important;
+}
+.multiselect-dropdown .dropdown-btn {
+  display: inline-block;
+  border: 1px solid #cccccc !important;
+}
+.multiselect-item-checkbox input[type="checkbox"] + div:before {
+  border: 1px solid #a6a6a6 !important;
+  top: 74% !important;
+  left: 0 !important;
+  width: 8px !important;
+  height: 8px !important;
+  margin-top: -9px !important;
+}
+.multiselect-item-checkbox input[type="checkbox"]:checked + div:before {
+  background: #ffffff !important;
+}
+.multiselect-item-checkbox input[type="checkbox"] + div:after {
+  top: 56% !important;
+  left: 1px !important;
+  width: 7px !important;
+  height: 2px !important;
+  border-color: #212529 !important;
+}
+.multiselect-dropdown .dropdown-btn .dropdown-up {
+  border-bottom: 8px solid #000000 !important;
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+}
+//input
+.form-control {
+  font-size: 12px !important;
+  height: 25px;
+  padding: 0px;
+}
+//pagination
+.ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #004831 !important;
+  color: #004831;
+  cursor: default;
+}
+
+//  .ngx-pagination .current {
+//     color: #ffffff !important;
+//   }
+.ngx-pagination {
+  // float: right !important;
+  // margin-right: -2px !important;
+  margin-bottom: 1rem !important;
+  text-align: center !important;
+}
+//coloum
+.col {
+  flex: 1;
+  padding: 0px !important;
+  font-size: 13px;
+}
+
+//auto complete
+.mat-form-field-appearance-outline .mat-form-field-outline {
+		color: #ccc !important;
+		// opacity: 1!important;
+    }
+    .mat-form-field-appearance-outline .mat-form-field-flex {
+      padding: 0 0.75em 0 0.75em !important;
+      margin-top: -0.6em !important;
+      position: relative !important;
+    }
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+      color: #ccc !important;
+    }
+    .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid
+    .mat-form-field-outline-thick {
+    color: #ccc !important;
+    opacity: 0 !important;
+  }
+  .mat-form-field-invalid .mat-input-element,
+  .mat-warn .mat-input-element {
+    caret-color: black !important;
+  }
+  .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.6) !important;
+    // color: $mainColor!important;
+  }
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: rgb(230, 230, 230) !important;
+  }
+  .mat-form-field-infix {
+    padding: 0.5em 0 !important;
+    border-top: -0.15625em solid transparent !important;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0.34375em !important;
+  }
+  .mat-form-field-infix {
+    // display: block !important;
+    // position: relative !important;
+    // flex: auto !important;
+    // min-width: 0 !important;
+    // width: 185px !important;
+    height: 30px !important;
+  }
+  .mat-form-field-infix {
+    border-top: 0.6em solid transparent !important;
+  }
+  mat-form-field {
+    width: 100% !important;
+  }
+  input.mat-input-element {
+    margin-top: -3px !important;
+    margin-left: -3px !important;
+    /* margin-top: -.0625em; */
+    margin-bottom: 6px !important;
+}
+.md-drppicker td.active, .md-drppicker td.active:hover {
+  background-color: #004831 !important;
+  border-color: transparent;
+  color: #fff;
+}
+.md-drppicker .btn {
+
+
+  font-size: 12px !important;
+
+  background-color: #004831 !important;
+
+  line-height: 27px !important;
+
+}
+.md-drppicker .btn:focus, .md-drppicker .btn:hover {
+  background-color: #004831 !important;
+}

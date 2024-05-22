@@ -1,0 +1,44 @@
+.col-sm-12 {
+  flex: 0 0 100%;
+  max-width: 91%;
+  margin-top: -6.5px;
+}
+
+.searchdiv {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  margin-left: 15px;
+}
+
+.form-control {
+  height: calc(1.5em + 0.75rem + -4.5px) !important;
+  font-size: 12px !important;
+}
+
+select {
+  width: 100%;
+  padding: 1.3px 8px !important;
+
+  display: inline-block;
+  border: 1.1px solid #ccc;
+  border-radius: 4px;
+}
+
+.card-header {
+  font-weight: bold;
+  padding: 0.45rem 1.05rem !important;
+  cursor: pointer !important;
+  height: 30px !important;
+  font-size: 14px !important;
+  background-color: #d6d6d6 !important;
+  border-bottom: 1px solid #d6d6d6 !important;
+}
+
+.card {
+  margin-left: 0px;
+  margin-right: 1px;
+  margin-top: 23px;
+  margin-bottom: 25px;
+}
+

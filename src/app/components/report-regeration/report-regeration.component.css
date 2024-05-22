@@ -1,0 +1,43 @@
+.pageHeight {
+  height: calc(85vh) !important;
+  overflow-y: scroll;
+}
+
+.flex-container {
+  margin-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+}
+
+.col {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  padding: 0px !important;
+  font-size: 13px;
+}
+
+.bg-success {
+  margin-left: 20px;
+  height: 84px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.card-header {
+  border-bottom: 0px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.textArea {
+  width: 150px;
+}
+
+button {
+  width: 25px;
+  height: 25px;
+}
+
+/*# sourceMappingURL=report-regeration.component.css.map */

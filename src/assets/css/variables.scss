@@ -1,0 +1,85 @@
+// window
+$screen-min-width: 500px;
+$container-width: 1200px;
+$container-min-height: calc(100vh - 1px);
+$container-alert-width: 300px;
+$container-popup-width: $container-width * 0.95;
+$container-popup-width-percentage: 95%;
+
+// media break points
+$screen-size-small: 576px;
+$screen-size-medium: 768px;
+$screen-size-large: 992px;
+$screen-size-very-large: 1200px;
+
+$screen-user-small: 750px;
+$screen-user-normal: 1200px;
+
+// spacing
+$line-height-base: 150%;
+
+// fonts
+$font-main: roboto,arial, sans-serif;
+$font-heading: roboto,arial, sans-serif;
+
+// font size
+$font-size-small: 1.0rem;
+$font-size-normal: 1.1rem;
+$font-size-medium: 1.2rem;
+$font-size-large: 1.6rem;
+$font-size-very-large: 2rem;
+
+// font weight
+$font-weight-normal: 400;
+$font-weight-medium: 700;
+$font-weight-heavy: 700;
+
+// base colors
+$red: #8B0000;
+$light-green: #00E600;
+$smbc-green : #004831;
+$dark-green: #2F4F2F;
+$faded-green: #D6DDD3;
+$border-gray: #c6c6c6;
+$gray-20: #333333;
+$blue: #87CEFA;
+
+// theme color
+$color-primary: $smbc-green;
+
+// font colors
+$color-font-light: white;
+$color-font-dark: darken($dark-green, 15%);
+$color-font-disabled: lighten($color-font-dark, 40%);
+$color-font-faded: white;
+$color-font-error: $red;
+$color-font-success: darken($light-green, 20%);
+$color-font-info: $blue;
+
+// background colors
+$color-bg-light: white;
+$color-bg-table: $color-primary;
+$color-bg-menu: $color-primary;
+$color-bg-menu-hover: lighten($color-primary, 20%);
+$color-bg-menu-item-hover: darken($color-bg-light, 10%);
+$color-bg-mask:  $faded-green;
+$color-bg-success: lighten($color-font-success, 90%);
+$color-bg-error: lighten($color-font-error, 90%);
+
+// button color
+$color-btn-primary: $color-primary;
+$color-btn-primary-hover: lighten($dark-green, 20%);
+
+// border color
+$color-border-common: lighten($dark-green, 60%);
+
+// border
+$border-radius-large: 0.5rem;
+$border-radius-normal: 0.4rem;
+$border: 1px solid $color-border-common;
+$border-faded: 1px solid $color-font-disabled;
+$border-dark: 1px solid $color-font-dark;
+
+// button
+$button-normal-width: 120px;
+$button-search-width: 50px;

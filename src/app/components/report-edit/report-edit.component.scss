@@ -1,0 +1,14 @@
+iframe {
+  height: calc(100vh - 150px) !important;
+  width: 95% !important;
+  margin-left: 2% !important;
+  border: 0 !important;
+}
+
+.page_header_bar {
+  background-color: green !important;
+}
+
+::ng-deep .page_header_bar {
+  background-color: green !important;
+}

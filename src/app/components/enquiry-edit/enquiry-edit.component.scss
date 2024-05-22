@@ -1,0 +1,635 @@
+.pageHeight {
+  height: calc(90vh) !important;
+  overflow-y: scroll;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.col {
+  flex: 1;
+  padding: 0 !important;
+  font-size: 13px;
+}
+
+.flex-container {
+  margin-top: 0;
+}
+
+.transactionForm {
+  border: 1px solid grey !important;
+  height: 80vh !important;
+  padding: 0 0 50px 0 !important;
+}
+
+.documentForm {
+  width: 95% !important;
+  height: 84% !important;
+  margin-left: 2% !important;
+  border: 0 !important;
+}
+
+.panel-actions {
+  margin-top: -20px;
+  margin-bottom: 0;
+  text-align: right;
+}
+
+.panel-actions a {
+  color: #333;
+}
+
+.panel-fullscreen {
+  display: block;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+.fa-h-square {
+  font-size: 17px !important;
+  color: #004831 !important;
+}
+
+.modal-content {
+  width: 166% !important;
+  margin-left: -144px !important;
+  max-height: 555px !important;
+}
+
+.timelineHeader {
+  height: 100%;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.175);
+  border: 1px solid #ccc;
+  border-radius: 0;
+  padding: 5px;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  background-color: #fff;
+}
+
+//model
+.commentHistoryModalBody {
+  position: relative;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1rem;
+  height: 410px !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  max-width: 1200px !important;
+}
+
+.modal-header {
+  background-color: white !important;
+  padding: 0.3rem !important;
+  border-bottom: 2px solid #004831 !important;
+}
+
+.modal-title {
+  color: black !important;
+}
+
+.modal-header .close {
+  color: black !important;
+  padding: 0.5rem;
+  margin: -0.5rem -0.5rem -0.5rem auto;
+}
+
+.footerBtn {
+  margin-top: -9px !important;
+  margin-bottom: -9px !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+}
+
+//timeline
+.timelinerow {
+  width: 400% !important;
+}
+
+.timeline {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* The actual timeline (the vertical ruler) */
+.timeline::after {
+  content: "";
+  height: attr(data-height);
+  position: absolute;
+  width: 6px;
+  background-color: #003222;
+  top: 0;
+  bottom: 0;
+  left: 1.2%;
+}
+
+.timeline::before {
+  display: none !important;
+  content: "";
+  background: #c5cae9;
+  width: 5px;
+  height: 95%;
+  position: absolute;
+  left: 0;
+  margin-left: 2px;
+  transform: translateX(-100%);
+}
+
+/* Container around content */
+.timeline-container {
+  padding: 10px 40px;
+  position: relative;
+  background-color: inherit;
+  width: 50%;
+}
+
+/* The circles on the timeline */
+.timeline-container::after {
+  content: "";
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  right: -17px;
+  background-color: white;
+  border: 4px solid #ff9f55;
+  top: 15px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+/* Place the container to the left */
+.left {
+  left: 0;
+}
+
+/* Place the container to the right */
+.right {
+  left: -7%;
+}
+
+/* Add arrows to the left container (pointing right) */
+.left::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  right: 30px;
+  border: medium solid white;
+  border-width: 10px 0 10px 10px;
+  border-color: transparent transparent transparent white;
+}
+
+/* Add arrows to the right container (pointing left) */
+.right::before {
+  content: " ";
+  height: 0;
+  position: absolute;
+  top: 22px;
+  width: 0;
+  z-index: 1;
+  left: 30px;
+  border: medium solid white;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent white transparent transparent;
+}
+
+/* Fix the circle for containers on the right side */
+.right::after {
+  left: 10px;
+}
+
+/* The actual content */
+.content {
+  word-break: break-all !important;
+  overflow-wrap: break-word !important;
+  bottom: 0 !important;
+  border: 1px solid #a79a9a !important;
+  width: 713px;
+  padding: 6px 7px;
+  background-color: #e6e6e6;
+  position: relative;
+  border-radius: 0;
+}
+
+/* Media queries - Responsive timeline on screens less than 600px wide */
+@media screen and (max-width: 600px) {
+  /* Place the timelime to the left */
+  .timeline::after {
+    left: 31px;
+  }
+
+  /* Full-width containers */
+  .timeline-container {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+  }
+
+  /* Make sure that all arrows are pointing leftwards */
+  .timeline-container::before {
+    left: 60px;
+    border: medium solid white;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent white transparent transparent;
+  }
+
+  /* Make sure all circles are at the same spot */
+  .left::after,
+  .right::after {
+    left: 15px;
+  }
+
+  /* Make all right containers behave like the left ones */
+  .right {
+    left: 0;
+  }
+}
+
+.content-header {
+  border-bottom: #004831;
+}
+
+.nodoc {
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+
+  size: 50px;
+  text-align: center;
+  width: 95%;
+  font-weight: bold;
+}
+
+.pageHeight {
+  height: calc(85vh) !important;
+  overflow-y: scroll;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.col {
+  flex: 1;
+  padding: 0 !important;
+  font-size: 13px;
+}
+
+.flex-container {
+  margin-top: 0;
+}
+
+.panel-actions {
+  margin-top: -20px;
+  margin-bottom: 0;
+  text-align: right;
+}
+
+.panel-actions a {
+  color: #333;
+}
+
+.panel-fullscreen {
+  display: block;
+  z-index: 9999;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
+}
+
+#DocFrame {
+  width: 100%;
+  height: 100%;
+}
+
+.buttons {
+  margin-top: 6px;
+}
+
+.btn {
+  padding: 3px 5px;
+}
+
+.btn-danger {
+  margin-left: 3px;
+}
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.my-drop-zone {
+  text-align: center;
+}
+
+.col-md-9 {
+  font-size: 13px;
+  margin-left: 43px;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  max-width: 100%;
+}
+
+.display-3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 2.2;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  text-align: center;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-top: 13px;
+}
+
+.btn-file input[type="file"] {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  cursor: inherit;
+  display: block;
+}
+
+.btn-file {
+  position: relative !important;
+}
+
+.btn-primary :hover {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+#divi {
+  width: 800px;
+}
+
+.table-bordered {
+  border: 0 solid #2f4f2f !important;
+}
+
+.table .thead-dark th {
+  color: #fff !important;
+  background-color: #004831 !important;
+  border-color: #004831 !important;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.table-bordered {
+  border: 1px solid #2f4f2f !important;
+}
+
+td {
+  font-size: 0.75rem;
+  width: 50%;
+}
+
+.table-responsive {
+  display: table;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.btn-1 {
+  margin-left: -83px;
+}
+
+.form-control {
+  font-size: 13px;
+}
+
+.font-weight-bold {
+  font-size: 13px;
+  font-weight: 700 !important;
+}
+
+.modal-content {
+  width: 150%;
+}
+
+.docType {
+  text-align: center;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-top: 0;
+}
+
+.footerButton {
+  width: 100px;
+  height: 30px;
+}
+
+.my-drop-zone {
+  height: 200px;
+  max-width: 772px;
+}
+
+.custom-select {
+  height: 30px;
+  margin-top: 0;
+}
+
+.doc {
+  margin-right: 0;
+  margin-top: 15rem;
+  margin-left: 0;
+}
+
+.nodoc {
+  margin-top: 1.5rem;
+  margin-left: 1rem;
+  // background: #d6d6d6;
+  size: 50px;
+  text-align: center;
+  width: 95%;
+  font-weight: bold;
+}
+
+b,
+strong {
+  font-size: 13px !important;
+}
+
+.wrapText {
+  white-space: nowrap;
+  width: 234px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wrapTextDropDown {
+  white-space: nowrap;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+option {
+  max-width: 2px !important;
+}
+
+.footerBtn {
+  margin-top: -9px !important;
+  margin-bottom: -9px !important;
+}
+
+.modal-header {
+  background-color: white !important;
+  padding: 0.3rem !important;
+  border-bottom: 2px solid #004831 !important;
+}
+
+.footerbtn {
+  float: right;
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+  text-align: center !important;
+  border-radius: 0;
+}
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+}
+
+#doccomp,
+#parentdoccomp {
+  height: 100%;
+  width: 100%;
+}
+
+#parentdoccomp {
+  height: 80vh !important;
+}
+
+.dropdown-item {
+  cursor: pointer !important;
+}
+
+.image-display-off {
+  position: absolute;
+  top: 200px;
+  float: right;
+  width: 50% !important;
+}
+
+.callbackHistoryTable .serialNoTD {
+  width: 5%;
+}
+
+.callbackHistoryTable .callbackDetailsTD {
+  width: 50%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}
+
+.callbackHistoryTable .userNameTD {
+  width: 15%;
+}
+
+.callbackHistoryTable .actionTD {
+  width: 15%;
+}
+
+.callbackHistoryTable .dateTime {
+  width: 15%;
+}
+
+.utilizationReversalHistoryTable .serialNoTD {
+  width: 5%;
+}
+
+.utilizationReversalHistoryTable .utilizationTD {
+  width: 28%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}
+
+.utilizationReversalHistoryTable .userNameTD {
+  width: 10%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}
+
+.utilizationReversalHistoryTable .actionTD {
+  width: 10%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}
+
+.utilizationReversalHistoryTable .commentsTD {
+  width: 32%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}
+
+.utilizationReversalHistoryTable .dateTime {
+  width: 15%;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 20ch;
+}

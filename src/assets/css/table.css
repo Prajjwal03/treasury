@@ -1,0 +1,53 @@
+.table .thead-dark th {
+  /*color: #1d1b1b !important;
+  background-color: #d0d5da;
+  border-color: #e9ecef;
+  font-size: 0.75rem;
+  text-align: center;*/
+  color: white !important;
+  background-color: #004831;
+  border-color: #e9ecef;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.table-bordered {
+  border: 0px solid #2f4f2f !important;
+}
+
+.table {
+  white-space: nowrap;
+}
+
+.table-bordered {
+  border: 0px solid #2f4f2f !important;
+}
+
+td {
+  text-align: center;
+  font-size: 0.75rem;
+  width: 20%;
+}
+
+th {
+  text-align: center;
+}
+
+.a-table {
+  font-size: 12px;
+  color: #337ab7;
+}
+
+.a-table:hover {
+  font-size: 12px !important;
+  color: #000000 !important;
+}
+
+.table-sm td,
+.table-sm th {
+  padding-top: 0.3rem !important;
+  padding-bottom: 0.1rem !important;
+  padding-left: 0.3rem !important;
+  padding-right: 0.3rem !important;
+}
+/*# sourceMappingURL=table.css.map */

@@ -1,0 +1,28 @@
+<div class="  pageHeight">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+  </ngx-loading>
+  <app-tabs [activeTab]="activeTab">
+    <simple-notifications id="simpleNotification"></simple-notifications>
+    <app-tab [tabTitle]="'Dashboard'">
+      <div class="tabHeader">
+        <app-dashboard-tabs [activeTab]="activeTab" (activeTabChanged)="loadMyTeamsToDo($event)">
+          <app-tab [tabTitle]="'My Team’s To Do'">
+            <app-teams-to-do (itemSelected)="itemSelected($event) " (createTransaction)="createTransaction($event)">
+            </app-teams-to-do>
+          </app-tab>
+          <app-tab [tabTitle]="'My To Do'">
+            <app-to-do *ngIf="myToDo" (itemSelected)="itemSelected($event)" (createTransaction)="createTransaction($event)">
+            </app-to-do>
+          </app-tab>
+          <app-tab [tabTitle]="'Watchlist'">
+            <app-watch-list *ngIf="watchList" (itemSelected)="itemSelected($event)"></app-watch-list>
+          </app-tab>
+        </app-dashboard-tabs>
+      </div>
+    </app-tab>
+  </app-tabs>
+  <ng-template let-instruction="instruction" #instructionEdit>
+    <app-enquiry-edit [instruction]="instruction" (itemSelected)="itemSelected($event)">
+    </app-enquiry-edit>
+  </ng-template>
+</div>

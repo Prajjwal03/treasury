@@ -1,0 +1,139 @@
+.buttons {
+  margin-top: 6px;
+}
+
+.btn {
+  padding: 3px 5px;
+}
+
+.btn-danger {
+  margin-left: 3px;
+}
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+/* Default class applied to drop zones on over */
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html, body {
+  height: 100%;
+}
+
+.my-drop-zone {
+  text-align: center;
+}
+
+.col-md-9 {
+  font-size: 13px;
+  margin-left: 43px;
+  -ms-flex: 0 0 75%;
+  -webkit-box-flex: 0;
+  flex: 0 0 75%;
+  max-width: 100%;
+}
+
+.display-3 {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 2.2;
+}
+
+button, input, optgroup, select, textarea {
+  text-align: center;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  margin-top: 13px;
+}
+
+.btn-file input[type=file] {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  cursor: inherit;
+  display: block;
+}
+
+.btn-file {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.btn-primary :hover {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+#divi {
+  width: 800px;
+}
+
+.table-bordered {
+  border: 0px solid #2f4f2f !important;
+}
+
+.table .thead-dark th {
+  color: #fff !important;
+  background-color: #004831 !important;
+  border-color: #004831 !important;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.table-bordered {
+  border: 1px solid #2F4F2F !important;
+}
+
+td {
+  font-size: 0.75rem;
+  width: 50%;
+}
+
+.table-responsive {
+  display: table;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.btn-1 {
+  margin-left: -83px;
+}
+
+.form-control {
+  font-size: 13px;
+}
+
+.font-weight-bold {
+  font-size: 13px;
+  font-weight: 700 !important;
+}
+
+.modal-content {
+  width: 150%;
+}
+
+.my-drop-zone {
+  height: 350px;
+  width: 200px;
+}
+
+/*# sourceMappingURL=form-upload.component.css.map */

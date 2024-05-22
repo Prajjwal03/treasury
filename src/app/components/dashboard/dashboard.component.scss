@@ -1,0 +1,86 @@
+.chart {
+  height: 300px;
+}
+
+.pieChart {
+  height: 300px;
+}
+
+.pageHeight {
+  height: calc(90vh) !important;
+  overflow-y: hidden !important;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.sectionHeader {
+  max-width: 136px !important;
+  margin-bottom: 7px !important;
+  margin-top: -4px !important;
+}
+
+.sectionHeader {
+  background-color: #004831 !important;
+}
+
+.sectionHeader a {
+  color: #f1f1f1 !important;
+}
+
+.fa-undo:before {
+  color: white !important;
+}
+
+.sectionBody {
+  padding: 1px 100px 0 !important;
+}
+
+.form-control {
+  margin-left: -115px !important;
+  border-radius: 0 !important;
+}
+
+.icon {
+  margin-top: -21px !important;
+  margin-right: 123px !important;
+}
+
+::ng-deep .md-drppicker.ltr {
+  margin-right: -300px !important;
+}
+
+.button {
+  float: right !important;
+}
+
+.customButton {
+  margin-left: -109px !important;
+  margin-top: -3px !important;
+}
+
+.btn {
+  border-radius: 0 !important;
+}
+
+.fa-undo:before {
+  content: "\f0e2";
+  margin-left: -8px !important;
+}
+
+.customButton {
+  max-width: 0 !important;
+  margin-left: -105px !important;
+  margin-top: -3px !important;
+}
+
+.fa-chevron-circle-down:before {
+  content: "\f13a";
+  margin-left: 23px !important;
+}
+
+.sectionHeader .fa {
+  margin-right: 0 !important;
+}

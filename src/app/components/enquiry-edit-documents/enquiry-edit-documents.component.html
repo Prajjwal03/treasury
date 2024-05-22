@@ -1,0 +1,377 @@
+<div class="container">
+  <div style="border: 1px solid #6c757d ;height:850px; max-height:850px;">
+    <div class="sectionHeader font-weight-bold width:100%">
+
+      <span data-toggle="collapse" style="margin-left: 5px">
+        Documents
+      </span>
+
+      <input type="image" alt="Window" src="assets/images/window.jpg" (click)="showWindow()" name="image" width="20" height="20"
+             style="float:right; margin-right: 5px; margin-top: 5px; margin-bottom: 5px"/></div>
+
+    <div *ngIf="opallframeflag"> &nbsp;<em *ngIf="opallframeflag && uploadTypes.length>0" class="fa fa-upload fa-2x"
+                                           aria-hidden="true"
+                                           style="float:left; margin-right: 5px;  margin-left: 12px;margin-top: 10px; margin-bottom: 5px;   "
+                                           data-toggle="modal" attr.data-target="#{{modelID}}"></em>
+      &nbsp; &nbsp;
+
+      <label class="font-weight-bold">Documents </label>&nbsp;
+      <select (change)="showDoc(selectedDocIndex)" [(ngModel)]="selectedDocIndex" type="dropdown"
+              class=" custom-select form-control mb-2 mr-sm-4 col-md-5 ">
+
+        <option class="   mb-2 mr-sm-4 col-md-5 " *ngFor="let docs of documentList;let i= index" value={{i}}>
+          {{ docs.documentName }}({{ docs.comment }})
+        </option>
+
+      </select>
+      <em class="fa fa-edit fa-2x" *ngIf="opallframeflag" aria-hidden="true"
+          style="margin-top: 13px; margin-bottom: 5px" data-toggle="modal" attr.data-target="#{{modelIdDoclist}}"></em>
+
+      <em class="fa fa-ellipsis-h fa-2x" aria-hidden="true"
+          style="margin-top: 13px; margin-bottom: 5px;margin-left:24px;color:#6c757d" id="navbarDropdown"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
+      <div class="dropdown-menu" style="font-size: 13px" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" *ngIf=" documentList[selectedDocIndex].ModifyAccess && !CheckOutFlag "> <em
+          class="fa fa-reply-all fa-2px" aria-hidden="true" style="margin-top: 13px; margin-bottom: 5px"
+          data-toggle="modal" data-target="#modelIDCheckOUT"> </em> Check Out </a>
+        <a class="dropdown-item" *ngIf="documentList[selectedDocIndex].ModifyAccess && CheckOutFlag"><em
+          class="fas fa-sign-in-alt fa-2px" aria-hidden="true" style="margin-top: 13px; margin-bottom: 5px"
+          data-toggle="modal" data-target="#modelIDCheckIN"> </em> Check In</a>
+        <a class="dropdown-item" (click)="Versions()"> <em class="fa fa-clone fa-2px" aria-hidden="true"
+                                                           data-toggle="modal" attr.data-target="#{{modelIDVersion}}"></em> Versions</a>
+        <a class="dropdown-item" (click)="Delete()"
+           *ngIf="opallframeflag && documentList[selectedDocIndex].deleteAccess"> <em class="fa fa-trash fa-2px"></em>
+          Delete
+        </a>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="container-fluid">
+      <div class="modal fade" *ngIf="displayFlag" id={{modelID}} tabindex="-1" role="dialog"
+           aria-labelledby="exampleModalLabel" aria-hidden="true" #demoBasic>
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-1"></div>
+                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
+                     [uploader]="uploader" class="well my-drop-zone col-sm-10" (onFileDrop)="selectFile($event)">
+
+                  <div style="color: dimgrey;margin-top: 10%;align-content: center"> Click below to add document.
+                  </div>
+                  <div>
+                    <label class="btn btn-primary btn-file">
+                      Browse
+                      <input type="file" (change)="selectFileBrowse($event)" ng2FileSelect [uploader]="uploader"
+                             id="uploadfile" placeholder="Upload File" name="uploadfile"/>
+                    </label></div>
+                  <div style="color: dimgrey"> OR
+                  </div>
+                  <div style="color: dimgrey"> Drag and drop here
+                  </div>
+
+
+                </div>
+                <div class="col-md-1"></div>
+              </div>
+              <br>
+              <div *ngIf="temfiles.length" style="overflow-y: scroll; overflow-x: scroll ; height: 160px;">
+
+                <table class="table table-responsive table-bordered table-sm ">
+                  <caption></caption>
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Document Name</th>
+                      <th>Document Type</th>
+                      <th>File Type</th>
+                      <th>Size</th>
+
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of temfiles;let i= index">
+                      <td class="wrapText"><strong>
+                        <div class="wrapText">{{ item.name }}</div>
+                      </strong></td>
+                      <td>
+                        <select (change)="showDoc(selectedDocIndex)" [(ngModel)]="type[i]" type="dropdown"
+                                class=" custom-select">
+                          <option *ngFor="let upTypes of uploadTypes;let i= index" value={{upTypes}}>{{ uploadTypes[i] }}
+                          </option>
+
+                        </select>
+                      </td>
+                      <td><strong>{{ docext[i] }}</strong></td>
+                      <td><strong>{{ filesize[i] | number: '1.0-0' }} {{ filesizeunit[i] }} </strong></td>
+
+                      <td>
+
+                        &nbsp;
+                        <em class="fa fa-trash" (click)="remove(i)"></em>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+
+                <div style="padding-right: 270px;
+        margin: auto;color: dimgrey"><strong>* Document size cannot exceed {{ limit }} MB</strong></div>
+                <button type="button" class="btn btn-1 btn-success btn-s footerbtn" style="float: right"
+                        (click)="upload(true)" [disabled]="!temfiles.length">
+                  <span class="glyphicon glyphicon-upload"></span> Save and Add More
+                </button>
+                <button type="button" class="btn btn-secondary footerbtn" [disabled]="!temfiles.length"
+                        (click)="upload(false)" data-dismiss="modal">Save and Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nodoc" *ngIf="!opallframeflag" style="float:center;color:green"><em class="fa fa-exclamation-circle"></em>
+      No Documents have been added yet.
+    </div>
+
+    <iframe id="DocFrame" title="Viewer" *ngIf="opallframeflag" [src]="url11" style="width: 95%;height: 100%;margin-left: 2%">
+    </iframe>
+
+    <div id="Doc" *ngIf="!opallframeflag" class="doc">
+
+      <input type="image" alt="Import Doc" src="assets/images/importdoc.png" (click)="preCheck()"
+             style="float:left; margin-right: 5px; margin-top: 10px; margin-bottom: 5px" data-toggle="modal"
+             attr.data-target="#{{modelID}}" *ngIf="!opallframeflag"/>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id={{modelIdDoclist}}>
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <div>
+              <h4 class="modal-title">Document List</h4>
+            </div>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-8">
+
+              </div>
+              <div class="col-sm-2" *ngIf="opallframeflag && documentList[selectedDocIndex].downloadAccess">
+                <a href={{downloadURL}} target="_blank" (click)="downloadDoc()" style="color:#004831"> <strong>
+                  Download</strong></a>
+              </div>
+              <div style="color:#004831"
+                   *ngIf="opallframeflag && documentList[selectedDocIndex].ModifyAccess && !CheckOutFlag"
+                   data-toggle="modal" data-target="#modelIDCheckOUT"><a><strong>CheckOut</strong></a></div>
+              <div style="color:#004831"
+                   *ngIf="opallframeflag && documentList[selectedDocIndex].ModifyAccess && CheckOutFlag"
+                   data-toggle="modal" data-target="#modelIDCheckIN"><a><strong>CheckIn</strong></a></div>
+
+            </div>
+            <div class="row" style="overflow-x: scroll; height: 230px;">
+              <div class="col-sm-12">
+                <table class="table table-responsive table-bordered table-sm">
+                  <caption></caption>
+                  <thead class="thead-dark">
+                    <th></th>
+                    <th>Document Name</th>
+                    <th>Size</th>
+                    <th>Type</th>
+                    <th>Version</th>
+                    <th>Pages</th>
+                    <th>Owner</th>
+                    <th>Modified</th>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let item of documentList;let i= index">
+                      <td><input type="checkbox" (click)=reset1(i) [(ngModel)]="checkbox1[i]" value="i"/></td>
+                      <td><strong>
+                        <div style="align-content: left" class="wrapText"
+                             title={{item.documentName}}({{item.comment}})>
+                          {{ item.documentName }}({{ item.comment }})
+                        </div>
+                      </strong></td>
+                      <td style="align-content: right"><strong>{{ item.documentSize }} B</strong></td>
+                      <td style="align-content: right"><strong>{{ item.documentExt }}</strong></td>
+                      <td style="align-content: right"><strong>{{ item.documentVersionNo }}</strong></td>
+                      <td style="align-content: right"><strong>{{ item.noOfPages }}</strong></td>
+                      <td style="align-content: left"><strong>{{ item.owner }}</strong></td>
+                      <td style="align-content: right"><strong>{{ item.accessDateTime }}</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div>
+      <window-component style="width: 100%;height: 100%;overflow: auto" *ngIf="showPortal">
+        <div class="container">
+          <iframe title="Google" src="https://www.google.com" style="width: 100%;height: 100%"></iframe>
+        </div>
+
+      </window-component>
+      <div *ngIf="opallframeflag" class="modal fade" id="modelIDCheckOUT" role="dialog"
+           [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modelIDCheckOUT">Document CheckOut</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" *ngIf="opallframeflag">
+
+              <div>
+                <p>You are about to checkout</p>
+              </div>
+              <div><strong>Document</strong> : {{ documentList[selectedDocIndex].comment }}</div>
+              <div><strong>Owner</strong> : {{ documentList[selectedDocIndex].owner }}</div>
+              <div><strong>Last Modified</strong> : {{ documentList[selectedDocIndex].accessDateTime }}</div>
+
+              <div><a href={{downloadURL}} target="_blank" style="color:#004831" (click)="downloadDoc()"><strong>Download</strong></a>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div style="color: green;font-size: 13px" *ngIf="checkOutSuccess"><strong> Document Checked Out
+                Successfully</strong></div>
+              <div style="color: red;font-size: 13px" *ngIf="checkOutError"><strong>* Error Occured during CheckOut</strong>
+              </div>
+              <button type="button" class="btn btn-success footerbtn" (click)="CheckOutDocument('Y')"
+                      *ngIf="!CheckOutFlag" data-dismiss="modal">Check Out
+              </button>
+              <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div *ngIf="opallframeflag" class="modal fade" id="modelIDCheckIN" role="dialog"
+           [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="CheckOutModal">Document CheckIn</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+              <div><strong>Version<br> </strong>
+                <p>
+                  <input type="radio" value="Major" name="VersionTypeMajor" [(ngModel)]="VersionType"> Major
+                  <input type="radio" value="Minor" name="VersionTypeMinor" [(ngModel)]="VersionType"> Minor
+                </p>
+              </div>
+              <br>
+              <div><strong>Version Number </strong>
+                <input type="text" *ngIf="opallframeflag" class="form-control mb-2 mr-sm-4 col-md-2 fontStyle"
+                       [disabled]="true" value="{{documentList[selectedDocIndex].documentVersionNo}}"/></div>
+              <strong>Document</strong>
+              <div>
+                <label class="btn btn-success btn-file">
+                  Browse
+                  <input type="file" (change)="selectFileCheckIn($event)"/>
+                </label>
+                {{ CheckInfileName }}
+                <div><strong> Add Version Comments</strong>
+                  <textarea type="textarea" [(ngModel)]="VersionComments"
+                            class="form-control mb-2 mr-sm-4 col-md-12 fontStyle" style="text-align: left"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <div style="color: red;font-size: 13px" *ngIf="ErrorMsg"><strong>{{ msg }}</strong></div>
+
+              <button type="button" class="btn btn-success footerbtn" (click)="CheckOutDocument('U')"
+                      data-dismiss="modal">Undo Check Out
+              </button>
+              <button type="button" class="btn btn-success footerbtn" data-dismiss="modal" (click)="CheckInDocument()"
+                      [disabled]="ErrorMsg">Check In
+              </button>
+              <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="opallframeflag" class="modal fade" id={{modelIDVersion}} role="dialog"
+           [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id={{modelIDVersion}}>Version History
+                ({{ documentList[selectedDocIndex].comment }})</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <table class="table table-responsive table-bordered table-sm">
+                    <caption></caption>
+                    <thead class="thead-dark">
+                      <th>Version</th>
+                      <th>Created By</th>
+                      <th>Created Date</th>
+                      <th>Type</th>
+                      <th>Comments</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let version of versionList;let i= index">
+                        <td>
+                          <a style="color: #004831;text-decoration: underline;" (click)="showDocVersion(i)">
+                            {{ version.documentVersionNo }}</a></td>
+                        <td style="align-content: left">{{ version.createdByUser }}</td>
+                        <td style="align-content: right">{{ version.creationDateTime }}</td>
+                        <td style="align-content: left">{{ version.documentExt }}</td>
+                        <td style="align-content: left">{{ version.Comment }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

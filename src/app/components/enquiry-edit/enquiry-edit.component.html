@@ -1,0 +1,772 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+</ngx-loading>
+<div class="container flex-container" *ngIf="!showWindow">
+
+  <div class="transactionForm" [ngStyle]="{'width':minimized === true ? '50%' : '100%' }">
+    <div class="sectionHeader font-weight-bold ">
+      <span data-toggle="collapse" style="margin-left: 5px">
+        Transaction Form
+      </span>
+
+      <span data-toggle="collapse" style="float:right; margin-right: 5px; " (click)="setCommentsHistoryFlag()">
+        <em class="fa fa-h-square" style="font-size:17px;color:#004831" aria-hidden="true" data-toggle="modal"
+            attr.data-target="#{{modalID}}"></em>
+      </span>
+    </div>
+
+    <iframe title="Viewer" style="border: 0px !important" width="100%" height="100%" #frame id={{frameid}} name={{frameid}}>
+    </iframe>
+  </div>
+
+  <div id="parentdoccomp" [ngStyle]="{'width':minimized === true ? '50%' : '100%' }">
+
+    <!--  Document Component  -->
+    <div id="doccomp" style="margin-left: 1%">
+      <div class="container">
+        <div style="border: 1px solid #6c757d;height:100% ">
+          <div class="sectionHeader font-weight-bold width:100%;">
+
+            <span data-toggle="collapse" style="margin-left: 5px">
+              Documents
+            </span>
+
+            <input type="image" alt="Window" *ngIf="opallframeflag" src="assets/images/window.jpg" (click)="showWindow1()"
+                   name="image" width="20" height="20" style="float:right; margin-right: 5px; margin-top: 5px; margin-bottom: 5px"/>
+          </div>
+
+          <div *ngIf="opallframeflag "> &nbsp;<em *ngIf="opallframeflag  && uploadTypes.length>0 && statuscode!='16'"
+                                                  class="fa fa-upload fa-2x" (click)="preCheck(false)" aria-hidden="true"
+                                                  style="float:left; margin-right: 5px;  margin-left: 12px;margin-top: 10px; margin-bottom: 5px;   "
+                                                  data-toggle="modal" attr.data-target="#{{modelID}}"></em>
+            &nbsp; &nbsp;
+
+            <label class="font-weight-bold">Documents </label>&nbsp;
+            <select (change)="showDoc(selectedDocIndex)" [(ngModel)]="selectedDocIndex" type="dropdown"
+                    class=" custom-select form-control mb-2 mr-sm-4 col-md-5 ">
+
+              <option class="   mb-2 mr-sm-4 col-md-5 " *ngFor="let docs of documentList;let i= index" value={{i}}>
+                {{ docs.documentName }}({{ docs.comment }}.{{ docs.documentExt }})
+              </option>
+
+            </select>
+            <em class="fa fa-edit fa-2x" *ngIf="opallframeflag" aria-hidden="true"
+                style="margin-top: 13px; margin-bottom: 5px" data-toggle="modal" attr.data-target="#{{modelIdDoclist}}"></em>
+
+            <em class="fa fa-ellipsis-h fa-2x" aria-hidden="true"
+                style="margin-top: 13px; margin-bottom: 5px;margin-left:24px;color:black" id="navbarDropdown"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></em>
+            <div class="dropdown-menu" style="font-size: 13px" aria-labelledby="navbarDropdown">
+              <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                      style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+              <a class="dropdown-item"
+                 *ngIf="statuscode!='16' && documentList[selectedDocIndex].ModifyAccess && !CheckOutFlag "
+                 data-toggle="modal" attr.data-target="#{{modelIDCheckOUT}}">
+                <em class="fa fa-reply-all fa-2px" aria-hidden="true" style="margin-top: 13px; margin-bottom: 5px"> </em>
+                Check Out
+              </a>
+              <a class="dropdown-item"
+                 *ngIf=" statuscode!='16' && documentList[selectedDocIndex].ModifyAccess && CheckOutFlag"
+                 data-toggle="modal" attr.data-target="#{{modelIDCheckIN}}">
+                <em class="fas fa-sign-in-alt fa-2px" aria-hidden="true" style="margin-top: 13px; margin-bottom: 5px"> </em>
+                Check In
+              </a>
+              <a class="dropdown-item" (click)="Versions()" data-toggle="modal" attr.data-target="#{{modelIDVersion}}">
+                <em class="fa fa-clone fa-2px" aria-hidden="true"></em>
+                Versions
+              </a>
+              <a class="dropdown-item" (click)="Delete()"
+                 *ngIf="opallframeflag && documentList[selectedDocIndex].deleteAccess && statuscode!='16' &&  documentList[selectedDocIndex].index==userIndex">
+                <em class="fa fa-trash fa-2px"></em>
+                Delete
+              </a>
+            </div>
+          </div>
+
+          <div class="container-fluid">
+            <div class="modal fade" *ngIf="displayFlag" id={{modelID}} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true" #demoBasic>
+              <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                      style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-1"></div>
+                      <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+                           (fileOver)="fileOverBase($event)" [uploader]="uploader" class="well my-drop-zone col-sm-10"
+                           (onFileDrop)="selectFile($event)">
+
+                        <div style="color: dimgrey;margin-top: 10%;align-content: center"> Click below to add document.
+                        </div>
+                        <div>
+                          <label class="btn btn-primary btn-file">
+                            Browse
+                            <input #fileInput type="file" (click)="fileInput.value = null" value=""
+                                   (change)="selectFileBrowse($event)" ng2FileSelect [uploader]="uploader" id="uploadfile"
+                                   placeholder="Upload File" name="uploadfile"/>
+                          </label></div>
+                        <div style="color: dimgrey"> OR
+                        </div>
+                        <div style="color: dimgrey"> Drag and drop here
+                        </div>
+                      </div>
+                      <div class="col-md-1"></div>
+                    </div>
+                    <br>
+                    <div *ngIf="temfiles.length" style="overflow-y: scroll; overflow-x: scroll ; height: 160px;">
+                      <table class="table table-responsive table-bordered table-sm ">
+                        <caption></caption>
+                        <thead class="thead-dark">
+                          <tr>
+                            <th>Document Name</th>
+                            <th>Document Type</th>
+                            <th>File Type</th>
+                            <th>Size</th>
+
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let item of temfiles;let i= index">
+                            <td class="wrapText"><strong>
+                              <div class="wrapText">{{ item.name }}</div>
+                            </strong></td>
+                            <td>
+
+                              <select (change)="showDoc(selectedDocIndex)" [(ngModel)]="type[i]" type="dropdown"
+                                      class=" custom-select">
+                                <option *ngFor="let upTypes of uploadTypes;let i= index" value={{upTypes}}>
+                                  {{ uploadTypes[i] }}
+                                </option>
+                              </select>
+                            </td>
+                            <td><strong>{{ docext[i] }}</strong></td>
+                            <td><strong>{{ filesize[i] | number: '1.0-0' }} {{ filesizeunit[i] }} </strong></td>
+                            <td>&nbsp;
+                              <em class="fa fa-trash" (click)="remove(i)"></em>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="modal-footer">
+                      <div style="padding-right: 270px;
+                margin: auto;color: dimgrey"><strong>* Document size cannot exceed {{ limit }} MB</strong></div>
+                      <button type="button" class="btn btn-success btn-s footerbtn" style="float: right"
+                              (click)="upload(true)" [disabled]="!temfiles.length">
+                        <span class="glyphicon glyphicon-upload"></span> Save and Add More
+                      </button>
+                      <button type="button" class="btn btn-secondary footerbtn" [disabled]="!temfiles.length"
+                              (click)="upload(false)" data-dismiss="modal">Save and Close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nodoc" *ngIf="!opallframeflag" style="float:center;color:green">
+            <p style="background-color: #d6d6d6"><em class="fa fa-exclamation-circle"></em> No Documents have been added
+              yet.</p>
+            <div id="Doc" *ngIf="!opallframeflag" class="doc">
+
+              <input type="image" alt="Import Doc" src="assets/images/importdoc.png" (click)="preCheck(true)" data-toggle="modal"
+                     attr.data-target="#{{modelID}}"
+                     *ngIf="!opallframeflag  && (uploadTypes.length>0 || activityid=='1')  && statuscode!='16' "/>
+            </div>
+          </div>
+          <ng-container *ngIf="showDocPane">
+            <iframe id={{DocFrameid}} [src]="getSourceURL()" class="documentForm" title="Document View"
+                    frameborder="0">
+            </iframe>
+          </ng-container>
+          <!--  <div class="w-100 h-100 image-display-off" *ngIf="opallframeflag && !supportFlag">
+                <br><br><br><br><br><br>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="EWMessage">Browser unable to display
+                                document. Please click the link below to view it.</td>
+                        </tr>
+                        <tr>
+                            <td class="EWLabel">
+                                <a href={{downloadURL}} target="_blank"
+                                    style="color: -webkit-link;cursor: pointer;text-decoration: underline;"
+                                    class="EWTableContents">Download</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+
+
+          <!-- The Modal -->
+          <div class="modal" id={{modelIdDoclist}}>
+            <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                    style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+            <div class="modal-dialog">
+
+              <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <div>
+                    <h4 class="modal-title">Document List</h4>
+                  </div>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <div class="row doclistrow">
+                    <div class="col-sm-8">
+
+                    </div>
+                    <div class="col-sm-2" *ngIf="opallframeflag && documentList[selectedDocIndex].downloadAccess">
+                      <a target="_blank" (click)="downloadDoc()" style="color:#004831"> <strong>
+                        Download</strong></a>
+                    </div>
+
+                    <div style="color:#004831"
+                         *ngIf="opallframeflag && statuscode!='16' && documentList[selectedDocIndex].ModifyAccess && !CheckOutFlag"
+                         data-toggle="modal" attr.data-target="#{{modelIDCheckOUT}}"><a><strong>CheckOut</strong></a></div>
+                    <div style="color:#004831"
+                         *ngIf="opallframeflag && statuscode!='16' && documentList[selectedDocIndex].ModifyAccess && CheckOutFlag"
+                         data-toggle="modal" attr.data-target="#{{modelIDCheckIN}}"><a><strong>CheckIn</strong></a></div>
+
+                  </div>
+                  <div class="row" style="overflow-x: scroll; height: 230px;">
+                    <div class="col-sm-12">
+                      <table class="table table-responsive table-bordered table-sm">
+                        <caption></caption>
+                        <thead class="thead-dark">
+                          <th></th>
+                          <th>Document Name</th>
+                          <th>Size</th>
+                          <th>Type</th>
+                          <th>Version</th>
+                          <th>Pages</th>
+                          <th>Owner</th>
+                          <th>Modified</th>
+                        </thead>
+
+                        <tbody>
+                          <tr *ngFor="let item of documentList;let i= index">
+                            <td><input type="checkbox" (click)=reset1(i) [(ngModel)]="checkbox1[i]" value="i"/></td>
+                            <td><strong>
+                              <div style="align-content: left" class="wrapText"
+                                   title={{item.documentName}}({{item.comment}}.{{item.documentExt}})>
+                                {{ item.documentName }}({{ item.comment }}.{{ item.documentExt }})
+                              </div>
+                            </strong></td>
+                            <td style="align-content: right"><strong>{{ item.documentSize }} B</strong></td>
+                            <td style="align-content: right"><strong>{{ item.documentExt }}</strong></td>
+                            <td style="align-content: right"><strong>{{ item.documentVersionNo }}</strong></td>
+                            <td style="align-content: right"><strong>{{ item.noOfPages }}</strong></td>
+                            <td style="align-content: left"><strong>{{ item.owner }}</strong></td>
+                            <td style="align-content: right"><strong>{{ item.accessDateTime }}</strong></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <window-component style="width: 100%;height: 100%;overflow: auto" *ngIf="showPortal">
+              <div class="container">
+                <iframe title="Google" src="https://www.google.com" style="width: 100%;height: 100%"></iframe>
+              </div>
+            </window-component>
+            <div *ngIf="opallframeflag" class="modal fade" id={{modelIDCheckOUT}} role="dialog"
+                 [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+              <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                      style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id={{modelIDCheckOUT}}>Document CheckOut</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body" *ngIf="opallframeflag">
+
+                    <div>
+                      <p>You are about to checkout</p>
+                    </div>
+                    <div><strong>Document</strong> :
+                      {{ documentList[selectedDocIndex].comment }}.{{ documentList[selectedDocIndex].documentExt }}
+                    </div>
+                    <div><strong>Owner</strong> : {{ documentList[selectedDocIndex].owner }}</div>
+                    <div><strong>Last Modified</strong> : {{ documentList[selectedDocIndex].accessDateTime }}</div>
+
+                    <div><a target="_blank" style="color:#004831"
+                            (click)="downloadDoc()"><strong>Download</strong></a>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                    <div style="color: green;font-size: 13px" *ngIf="checkOutSuccess"><strong> Document Checked Out
+                      Successfully</strong></div>
+                    <div style="color: red;font-size: 13px" *ngIf="checkOutError"><strong>* Error Occured during
+                      CheckOut</strong>
+                    </div>
+                    <button type="button" class="btn btn-success footerbtn" (click)="CheckOutDocument('Y')"
+                            *ngIf="!CheckOutFlag" data-dismiss="modal">Check Out
+                    </button>
+                    <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="opallframeflag" class="modal fade" id={{modelIDCheckIN}} role="dialog"
+                 [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+              <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                      style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+              <div class="modal-dialog">
+                <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                        style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                  <div class="modal-header">
+                    <h5 class="modal-title" id={{modelIDCheckIN}}>Document CheckIn</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body">
+                    <div><strong>Version<br> </strong>
+                      <p>
+                        <input type="radio" value="Major" name="VersionTypeMajor" [(ngModel)]="VersionType"> Major
+                        <input type="radio" value="Minor" name="VersionTypeMinor" [(ngModel)]="VersionType"> Minor
+                      </p>
+                    </div>
+                    <br>
+                    <div><strong>Version Number </strong>
+                      <input type="text" *ngIf="opallframeflag" class="form-control mb-2 mr-sm-4 col-md-2 fontStyle"
+                             [disabled]="true" value="{{documentList[selectedDocIndex].documentVersionNo}}"/></div>
+                    <strong>Document</strong>
+                    <div>
+                      <label class="btn btn-success btn-file">
+
+                        Browse
+
+                        <input type="file" (change)="selectFileCheckIn($event)"/>
+                      </label>
+                      {{ CheckInfileName }}
+                      <div><strong> Add Version Comments</strong>
+                        <textarea type="textarea" [(ngModel)]="VersionComments" [maxlength]="maxChars"
+                                  class="form-control mb-2 mr-sm-4 col-md-12 fontStyle" style="text-align: left"></textarea>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                    <div style="color: red;font-size: 13px" *ngIf="ErrorMsg"><strong>{{ msg }}</strong></div>
+
+                    <button type="button" class="btn btn-success footerbtn" (click)="CheckOutDocument('U')"
+                            data-dismiss="modal">Undo Check Out
+                    </button>
+                    <button type="button" class="btn btn-success footerbtn" data-dismiss="modal"
+                            (click)="CheckInDocument()" [disabled]="ErrorMsg">Check In
+                    </button>
+                    <button type="button" class="btn btn-secondary footerbtn" data-dismiss="modal">Close</button>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+            <div *ngIf="opallframeflag" class="modal fade" id={{modelIDVersion}} role="dialog"
+                 [ngStyle]="{'display': mdlSampleIsOpen ? 'block' : 'none', 'opacity': 1}">
+              <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                      style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+              <div class="modal-dialog">
+                <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                        style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                  <div class="modal-header">
+                    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                    <h5 class="modal-title" id={{modelIDVersion}}>Version History
+                      ({{ documentList[selectedDocIndex].comment }}.{{ documentList[selectedDocIndex].documentExt }})</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body">
+                    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                    <div class="row versionlist">
+                      <div class="col-sm-12">
+                        <table class="table table-responsive table-bordered table-sm">
+                          <caption></caption>
+                          <thead class="thead-dark">
+                            <th>Version</th>
+                            <th>Created By</th>
+                            <th>Created Date</th>
+                            <th>Type</th>
+                            <th class="wrapText">Comments</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let version of versionList;let i= index">
+                              <td>
+                                <a style="color: #004831;text-decoration: underline;" (click)="showDocVersion(i)">
+                                  {{ version.documentVersionNo }}</a></td>
+                              <td style="align-content: left">{{ version.createdByUser }}</td>
+                              <td style="align-content: right">{{ version.creationDateTime }}</td>
+                              <td style="align-content: left">{{ version.documentExt }}</td>
+                              <td style="align-content: left">
+                                <div class="wrapText" title={{version.Comment}}>{{ version.Comment }}</div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Document Component End-->
+  </div>
+
+</div>
+
+<form #form="ngForm" method="POST" (ngSubmit)="onSubmit()">
+  <input type="hidden" name="attr" id="attr" value="instruction['attributeData']">
+  <input type="hidden" name="genData" id="attr" value="instruction['generalData']">
+</form>
+
+<div class="modal fade" id="{{modalID}}" role="dialog">
+  <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+  <div class="modal-dialog">
+    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+    <div class="modal-content">
+      <div class="modal-header">
+        <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+        <h5 class="modal-title">History
+        </h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+
+      <div class="modal-body commentHistoryModalBody">
+        <div class="container">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" [ngClass]="{'active': activeTab==='commentshis'}"
+                                    href="#CommentsHistory" data-toggle="tab" (click)="comhis('commentshis')"><strong>Comments</strong></a>
+            </li>
+            <li class="nav-item"><a class="nav-link" [ngClass]="{'active': activeTab==='wihistory'}"
+                                    href="#ActionHistory" data-toggle="tab" (click)="wihis('wihistory')"><strong>Action</strong></a>
+            </li>
+            <li class="nav-item" *ngIf="isDFX"><a class="nav-link" [ngClass]="{'active': activeTab==='vhistory'}"
+                                                  href="#VersionHistory" data-toggle="tab" (click)="vhis('vhistory')"><strong>Version</strong></a>
+            </li>
+            <!--Added by Sai for Swap Link-->
+            <li class="nav-item" *ngIf="isDFX && this.TransactionSubType==='SWAP'"><a class="nav-link" [ngClass]="{'active': activeTab==='swaplink'}"
+                                                                                      href="#SwapLinkedTicket" data-toggle="tab"
+                                                                                      (click)="swap('swaplink')"><strong>Swap Linked
+              Ticket</strong></a>
+            </li>
+            <li class="nav-item" *ngIf="isDFX"><a class="nav-link" [ngClass]="{'active': activeTab==='callbackAmendmentLink'}"
+                                                  href="#CallbackAmendmenHistory" data-toggle="tab"
+                                                  (click)="callBackAmendmentHistory('callbackAmendmentLink')"><strong>Callback</strong></a>
+            </li>
+            <li class="nav-item" *ngIf="isDFX"><a class="nav-link" [ngClass]="{'active': activeTab==='utilizationReversalHistoryLink'}"
+                                                  href="#UtilizationReversalHistory" data-toggle="tab"
+                                                  (click)="utilizationReversalHistory('utilizationReversalHistoryLink')"><strong>Utilization</strong></a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div id="CommentsHistory" class="tab-pane" [ngClass]="{ 'active':activeTab==='commentshis'}"
+                 (click)="comhis('commentshis')">
+              <div *ngIf="!historyDisplayFLag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+
+              <div class="timelineHeader" *ngIf="historyDisplayFLag">
+                <div class="row  row-last timelinerow">
+                  <div class="col-md-1 col-sm-6 col-xs-12 outerControlDiv">
+                    <div class="form-group errorMessageHoverDiv tooltipstered">
+                      <div class="row" style="font-weight: 600">
+                        Created By: {{ chCreatedBy }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 col-sm-6 col-xs-12 outerControlDiv">
+                    <div class="form-group errorMessageHoverDiv tooltipstered">
+                      <div class="row" style="font-weight: 600">
+                        Created Date: {{ chCreatedDate  | date:'dd-MMM-y HH:mm' }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-1 col-sm-6 col-xs-12 outerControlDiv">
+                    <div class="form-group errorMessageHoverDiv tooltipstered">
+                      <div class="row" style="font-weight: 600">
+                        Transaction ID: {{ chTransactionID }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="historyDisplayFLag" class="timeline">
+                <div *ngFor="let items of commentHistory" class="timeline-container right">
+                  <div class="content">
+
+                    <div class="content-header">
+                      Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{ items.Action }}
+                    </div>
+
+                    <div class="content-header">
+                      User Name: {{ items.UserId }}
+                    </div>
+                    <div class="content-header">
+                      Date Time&nbsp;&nbsp;: {{ items.ActionDatetime | date:'dd-MMM-y HH:mm' }}
+                    </div>
+
+                    <div>
+                      Comment&nbsp;&nbsp;&nbsp;: {{ items.Comments }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="ActionHistory" class="tab-pane" [ngClass]="{'active': activeTab==='wihistory'}">
+              <div *ngIf="!WIhistoryDisplayFLag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+              <div class="timeline" *ngIf="WIhistoryDisplayFLag">
+                <div *ngFor="let items of WIhistory" class="timeline-container right">
+                  <div class="content">
+                    <div class="content-header">
+                    </div>
+                    {{ items.actionDescription }} on {{ items.actionDateTime }}
+                    <div style="font-weight: 600"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="VersionHistory" class="tab-pane" [ngClass]="{'active': activeTab==='vhistory'}">
+              <div *ngIf="!VhistoryDisplayFLag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+
+              <div class="table-responsive" *ngIf="VhistoryDisplayFLag">
+                <div class="inlineflex">
+                  <div class="margin1">
+                    <table
+                      class="table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                      <caption></caption>
+                      <thead class="thead-dark">
+                        <tr>
+                          <th>Transaction Id</th>
+                          <th>Contract No</th>
+                          <th>Version</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let items of versionHistory">
+                          <td>
+                            <a (click)="sessionValidation();openTabForVersion(items)" class="a-table" data-dismiss="modal"
+                               role="button" tabindex="0">
+                              {{ items.TransactionID }}
+                            </a>
+                          </td>
+                          <td>
+                            {{ items.Contract_No }}
+                          </td>
+                          <td>
+                            {{ items.versionNumber }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--Added by Sai  for Swap link Tab-->
+            <div id="SwapLinkedTicket" class="tab-pane" [ngClass]="{'active': activeTab==='swaplink'}">
+              <div *ngIf="!SwapLinkDisplayFLag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+              <div class="table-responsive" *ngIf="SwapLinkDisplayFLag">
+                <div class="inlineflex">
+                  <div class="margin1">
+                    <table class="table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                      <caption></caption>
+                      <thead class="thead-dark">
+                        <tr>
+                          <th>Transaction Id</th>
+                          <th>Contract No</th>
+                          <th>Version</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let items of swapLink">
+                          <td>
+                            <a (click)="sessionValidation();openTabForVersion(items)" class="a-table" data-dismiss="modal"
+                               role="button" tabindex="0">
+                              {{ items.TransactionID }}
+                            </a>
+                          </td>
+                          <td>
+                            {{ items.Contract_No }}
+                          </td>
+                          <td>
+                            {{ items.versionNumber }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="CallbackAmendmenHistory" class="tab-pane" [ngClass]="{'active': activeTab==='callbackAmendmentLink'}">
+              <div *ngIf="!CallbackAmendmentLinkDisplayFLag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+              <div class="table-responsive" *ngIf="CallbackAmendmentLinkDisplayFLag">
+                <div class="inlineflex">
+                  <div class="margin1">
+                    <table
+                      class="callbackHistoryTable css-serial table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 5%;">
+                        <col style="width: 50%;">
+                        <col style="width: 15%;">
+                        <col style="width: 15%;">
+                        <col style="width: 15%;">
+                      </colgroup>
+                      <thead class="thead-dark">
+                        <tr>
+                          <th>S.No</th>
+                          <th>Callback details</th>
+                          <th>User Name</th>
+                          <th>Action</th>
+                          <th>Date Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let items of callbackAmendmentHistoryLink; let i = index">
+                          <td class="serialNoTD">{{ i + 1 }}</td>
+                          <td class="callbackDetailsTD" [innerHtml]="items.callbackDetails" style="text-align: left;"></td>
+                          <td class="userNameTD">
+                            {{ items.userName }}
+                          </td>
+                          <td class="actionTD">
+                            {{ items.action }}
+                          </td>
+                          <td class="dateTime">
+                            {{ items.dateTime }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="UtilizationReversalHistory" class="tab-pane" [ngClass]="{'active': activeTab==='utilizationReversalHistoryLink'}">
+              <div *ngIf="!UtilizationReversalDisplayFlag" class="text-center">
+                <strong>No History Found</strong>
+              </div>
+              <div class="table-responsive" *ngIf="UtilizationReversalDisplayFlag">
+                <div class="inlineflex">
+                  <div class="margin1">
+                    <table
+                      class="utilizationReversalHistoryTable css-serial table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 5%;">
+                        <col style="width: 28%;">
+                        <col style="width: 10%;">
+                        <col style="width: 10%;">
+                        <col style="width: 32%;">
+                        <col style="width: 15%;">
+                      </colgroup>
+                      <thead class="thead-dark">
+                        <tr>
+                          <th>S.No</th>
+                          <th>Utilization details</th>
+                          <th>User Name</th>
+                          <th>Status</th>
+                          <th>Comments</th>
+                          <th>Date Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let items of utilizationReversalHistoryLink; let i = index">
+                          <td class="serialNoTD">{{ i + 1 }}</td>
+                          <td class="utilizationTD" [innerHtml]="items.utlizationDetails" style="text-align: left;"></td>
+                          <td class="userNameTD">
+                            {{ items.userName }}
+                          </td>
+                          <td class="actionTD">
+                            {{ items.action }}
+                          </td>
+                          <td class="commentsTD">
+                            {{ items.comments }}
+                          </td>
+                          <td class="dateTime">
+                            {{ items.dateTime }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="modal-footer">
+      <button class="customButton btn footerBtn" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+    <button id="openDoc" [hidden]="true" data-toggle="modal" attr.data-target="#{{modelID}}">Open
+      Modal
+    </button>
+  </div>
+</div>

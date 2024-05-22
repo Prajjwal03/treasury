@@ -1,0 +1,25 @@
+//Bug ID: 1080143
+//Bug Description : remove Double chevron icon from dashboard and case enquiry
+::ng-deep .ngx-pagination .pagination-previous a::before {
+  content: none !important;
+  display: inline-block;
+  margin-right: 0.5rem
+}
+
+::ng-deep .ngx-pagination .pagination-previous.disabled::before {
+  content: none !important;
+  display: inline-block;
+  margin-right: 0.5rem
+}
+
+::ng-deep .ngx-pagination .pagination-next a::after {
+  content: none !important;
+  display: inline-block;
+  margin-left: 0.5rem;
+}
+
+::ng-deep .ngx-pagination .pagination-next.disabled::after {
+  content: none !important;
+  display: inline-block;
+  margin-left: 0.5rem;
+}

@@ -1,0 +1,12 @@
+<app-tabs>
+  <app-tab [tabTitle]="'Reports'">
+    <app-report-regeration (createTabReport)="createTabReport($event)">
+    </app-report-regeration>
+    <hr/>
+  </app-tab>
+</app-tabs>
+
+<ng-template let-instruction="instruction" #instructionReport>
+  <app-report-edit [instruction]="instruction">
+  </app-report-edit>
+</ng-template>

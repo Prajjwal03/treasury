@@ -1,0 +1,217 @@
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "src/assets/css/table.scss";
+@import "src/assets/css/formlevel.scss";
+@import "src/assets/css/button.scss";
+@import "variables.scss";
+@import "~@angular/material/theming";
+@import "~angular-mgl-timeline/theme";
+@import "~angular-vertical-timeline/dist/vertical-timeline.css";
+// @import "src/assets/all.css";
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  height: calc(200vh - 0px);
+  color: #000;
+  margin-bottom: 2rem;
+}
+.container {
+  max-width: 16300px !important;
+  height: 100%;
+}
+.pageHeight {
+  height: calc(100vh - 150px);
+  overflow-y: scroll;
+}
+label {
+  display: inline-block;
+  margin-bottom: 0rem !important;
+}
+.form-group {
+  margin-bottom: 0.5rem !important;
+}
+
+.row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+//Columns
+
+.col,
+.col-1,
+.col-10,
+.col-11,
+.col-12,
+.col-2,
+.col-3,
+.col-4,
+.col-5,
+.col-6,
+.col-7,
+.col-8,
+.col-9,
+.col-auto,
+.col-lg,
+.col-lg-1,
+.col-lg-10,
+.col-lg-11,
+.col-lg-12,
+.col-lg-2,
+.col-lg-3,
+.col-lg-4,
+.col-lg-5,
+.col-lg-6,
+.col-lg-7,
+.col-lg-8,
+.col-lg-9,
+.col-lg-auto,
+.col-md,
+.col-md-1,
+.col-md-10,
+.col-md-11,
+.col-md-12,
+.col-md-2,
+.col-md-3,
+.col-md-4,
+.col-md-5,
+.col-md-6,
+.col-md-7,
+.col-md-8,
+.col-md-9,
+.col-md-auto,
+.col-sm,
+.col-sm-1,
+.col-sm-10,
+.col-sm-11,
+.col-sm-12,
+.col-sm-2,
+.col-sm-3,
+.col-sm-4,
+.col-sm-5,
+.col-sm-6,
+.col-sm-7,
+.col-sm-8,
+.col-sm-9,
+.col-sm-auto,
+.col-xl,
+.col-xl-1,
+.col-xl-10,
+.col-xl-11,
+.col-xl-12,
+.col-xl-2,
+.col-xl-3,
+.col-xl-4,
+.col-xl-5,
+.col-xl-6,
+.col-xl-7,
+.col-xl-8,
+.col-xl-9,
+.col-xl-auto {
+  position: relative;
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+//
+.CollapseSection {
+  // background-color: #f3f2f2;
+  color: #000000 !important;
+  // border: 1px solid #d6d6d6 !important;
+  // margin-top: 0.5rem !important;
+  // margin-bottom: 0.5rem;
+}
+.sectionHeader {
+  margin-right: -1px;
+  margin-top: -1px;
+  cursor: pointer;
+  height: 30px !important;
+  line-height: 30px;
+  font-size: 14px;
+  background-color: #d6d6d6;
+  border-bottom: 1px solid #d6d6d6;
+}
+.sectionHeader .fa {
+  line-height: 30px;
+  margin-right: 10px;
+}
+.sectionHeader a {
+  color: #000000 !important;
+  margin-left: 2px;
+}
+.collapsePadding {
+  padding: 5px;
+}
+.sectionBody {
+  padding-top: 1px;
+  padding-bottom: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+//watch and add to watch list
+.searchdiv {
+  position: relative;
+  padding-top: 0px;
+  padding-bottom: 30px;
+}
+.watchdiv {
+  position: relative;
+}
+
+//iframe
+iframe {
+  // height: calc(100vh - 150px) !important;
+}
+//scroll bar
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+b,
+strong {
+  font-size: 20px !important;
+}
+.simple-notification .icon {
+  position: absolute;
+  box-sizing: border-box;
+  top: 20px !important;
+  right: 0;
+  width: 70px;
+  height: 70px;
+  padding: 10px;
+}
+//Modal CSS
+// .modal-header {
+//   background-color: #004831 !important;
+//   padding: 0.5rem !important;
+// }
+// .modal-title {
+//   color: white !important;
+// }
+// .modal-header .close {
+//   color: white !important;
+//   padding: 0.5rem;
+//   margin: -0.5rem -0.5rem -0.5rem auto;
+// }
+.hidden {
+  display: none !important;
+}

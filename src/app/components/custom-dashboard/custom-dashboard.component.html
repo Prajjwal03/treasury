@@ -1,0 +1,76 @@
+<app-tabs>
+  <app-tab [tabTitle]="'Custom Dashboard'">
+    <div class="container pageHeight">
+      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+      </ngx-loading>
+      <div>
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+        </ngx-loading>
+        <div class="table-responsive">
+          <div class="inlineflex">
+            <div class="margin1">
+              <div class="customDashboardHeader">Value Today Tickets (Transaction Sub-Type)</div>
+              <table class="table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                <caption></caption>
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" rowspan=2>Dept</th>
+                    <th scope="col" rowspan=2>Transaction Sub-Type</th>
+                    <th scope="col" rowspan=2>Pending Treasury Back</th>
+                    <th scope="col" colspan=2>Pending Operation</th>
+                    <th scope="col" rowspan=2>Utilization Completed</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Maker</th>
+                    <th scope="col">Checker</th>
+                  </tr>
+                </thead>
+                <ng-container *ngFor="let item of valueTodayTicketsCountMap | keyvalue">
+                  <tr *ngFor="let list of item.value, index as i">
+                    <td [attr.rowspan]="item.value.length" class="valign" *ngIf="i == 0">{{ item.key }}</td>
+                    <td>{{ list.sub_product_id }}</td>
+                    <td>{{ list.PendingTreasuryBack }}</td>
+                    <td>{{ list.PendingOperationMaker }}</td>
+                    <td>{{ list.PendingOperationChecker }}</td>
+                    <td>{{ list.UtilizationCompleted }}</td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+            <div class="margin1">
+              <div class="customDashboardHeader">Value Today Tickets (CCY)</div>
+              <table
+                class="table table-responsive responsive-table table-striped table-bordered table-sm table-fixed">
+                <caption></caption>
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col" rowspan=2>Dept</th>
+                    <th scope="col" rowspan=2>CCY(Sell)</th>
+                    <th scope="col" rowspan=2>Pending Treasury Back</th>
+                    <th scope="col" colspan=2>Pending Operation</th>
+                    <th scope="col" rowspan=2>Utilization Completed</th>
+                  </tr>
+                  <tr>
+                    <th scope="col">Maker</th>
+                    <th scope="col">Checker</th>
+                  </tr>
+                </thead>
+                <ng-container *ngFor="let item of valueTodayTicketsCCYCountMap | keyvalue">
+                  <tr *ngFor="let list of item.value, index as i">
+                    <td [attr.rowspan]="item.value.length" class="valign" *ngIf="i == 0">{{ item.key }}</td>
+                    <td>{{ list.sell_side_currency }}</td>
+                    <td>{{ list.PendingTreasuryBack }}</td>
+                    <td>{{ list.PendingOperationMaker }}</td>
+                    <td>{{ list.PendingOperationChecker }}</td>
+                    <td>{{ list.UtilizationCompleted }}</td>
+                  </tr>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr/>
+  </app-tab>
+</app-tabs>

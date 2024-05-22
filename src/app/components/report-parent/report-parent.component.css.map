@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "report-parent.component.scss"
+    ],
+    "names": [],
+    "file": "report-parent.component.css"
+}

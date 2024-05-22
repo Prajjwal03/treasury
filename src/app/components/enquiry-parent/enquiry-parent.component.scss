@@ -1,0 +1,20 @@
+.pageHeight {
+  height: calc(85vh) !important;
+  overflow-y: scroll;
+}
+
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+.col {
+  flex: 1;
+  padding: 0 !important;
+  font-size: 13px;
+}
+
+.flex-container {
+  margin-top: 15px;
+
+}

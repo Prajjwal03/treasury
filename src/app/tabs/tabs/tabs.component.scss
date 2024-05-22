@@ -1,0 +1,75 @@
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #7ed320 !important;
+  border-bottom: 1px solid #7ed320 !important;
+  border-top: transparent;
+  border-right: transparent;
+  border-left: transparent;
+  cursor: pointer !important;
+}
+
+.nav-tabs .nav-link {
+  color: #2f4f2f;
+  font-weight: bold;
+  border: none;
+  border-bottom: 1px solid #2f4f2f;
+  cursor: pointer !important;
+}
+
+.tab-close {
+  color: gray;
+  text-align: right;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+//model
+.footer-modal {
+  border-top: 0px solid white !important;
+  margin-right: 93px !important;
+}
+
+.content-modal {
+  margin-left: 71px !important;
+  width: 70% !important;
+  margin-top: 193px !important;
+}
+
+#pdf {
+  pointer-events: none !important;
+}
+
+#pdf1 {
+  pointer-events: none !important;
+}
+
+.btn-danger {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-danger:hover {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-primary {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.modal1 {
+  top: calc(50% - 150px) !important;
+}

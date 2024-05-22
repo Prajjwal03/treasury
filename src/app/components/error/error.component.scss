@@ -1,0 +1,66 @@
+@import "../../../assets/css/variables.scss";
+
+.navbar {
+  padding: 0rem 1rem !important;
+}
+
+.menu-main {
+  background-color: $color-bg-menu;
+  border-bottom: 5px solid #c4d700;
+
+  .navbar-toggler {
+    color: $color-font-faded !important;
+    display: inherit;
+  }
+
+  .navbar-toggler-icon {
+    width: 1em;
+  }
+
+  .navbar-brand {
+    color: $color-font-faded !important;
+    cursor: pointer;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-medium;
+  }
+
+  .nav-link {
+    color: $color-font-faded !important;
+    font-size: $font-size-medium;
+    cursor: pointer;
+
+    span {
+      padding-left: 1rem;
+    }
+  }
+
+  .nav-link:hover,
+  .navbar-brand:hover,
+  .nav-link:focus,
+  .navbar-brand:focus {
+    color: $color-font-faded !important;
+    background-color: $color-bg-menu-hover;
+  }
+}
+
+.loginClass {
+  padding: 4rem 2rem;
+
+  .msg {
+    h5 {
+      letter-spacing: 3px;
+      color: #00c3ff;
+    }
+
+    p {
+      letter-spacing: 2px;
+
+      a {
+        color: #0052d4;
+        font-size: 11px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

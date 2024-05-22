@@ -1,0 +1,64 @@
+.centered1 {
+  width: 500px;
+  height: 500px;
+  position: fixed;
+  top: calc(50% - 150px); // half of width
+  left: calc(50% - 250px); // half of height
+}
+
+.modal-footer {
+  background-color: white !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom-right-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+.modal-header {
+  background-color: white !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+.modal-body {
+  background-color: white !important;
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+.btn-danger {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-danger:hover {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-primary {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-primary:hover {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+}
+
+#pdf {
+  pointer-events: none !important;
+}

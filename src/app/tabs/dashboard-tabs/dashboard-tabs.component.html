@@ -1,0 +1,18 @@
+<div class="todoTabs">
+  <ul class="nav nav-tabs ">
+    <li class="nav-item" *ngFor="let tab of tabs" (click)="selectTab(tab)">
+      <a class="nav-link" [ngClass]="{active: tab.active}">{{ tab.title }}</a>
+    </li>
+    <!-- dynamic tabs -->
+    <li class="nav-item" *ngFor="let tab of dynamicTabs" (click)="selectTab(tab)">
+      <a class="nav-link" #myDiv [ngClass]="{active: tab.active}">{{ tab.title }}
+        <span id={{tab.title}} class="tab-close" *ngIf="tab.isCloseable" (click)="closeTab(tab)">
+          x
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<ng-content></ng-content>
+<ng-template dynamic-tabs #container></ng-template>

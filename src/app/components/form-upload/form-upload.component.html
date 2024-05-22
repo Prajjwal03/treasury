@@ -1,0 +1,96 @@
+<div><input type="image" alt="Upload" src="assets/images/upload2.png" name="image" width="25" height="25"
+            style="float:left; margin-right: 5px; margin-top: 10px; margin-bottom: 5px" data-toggle="modal" data-target="#exampleModal"/>
+  &nbsp; &nbsp;
+
+  <label class="font-weight-bold">Documents </label>&nbsp;
+  <select class="custom-select form-control mb-2 mr-sm-4 col-md-2 fontStyle">
+
+    <option *ngFor="let docs of files;let i= index" [value]='docs.name'>{{ docs.name }}</option>
+
+  </select></div>
+
+<!-- Modal -->
+<div class="container-fluid">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Documents</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body row">
+          <div class="col-sm-1"></div>
+          <div ng2FileDrop
+               [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+               (fileOver)="fileOverBase($event)"
+               [uploader]="uploader"
+               class="well my-drop-zone col-sm-6"
+               (onFileDrop)="selectFile($event)">
+            <div id="divi" class="form-inline topMargin ">
+              <br>
+              <div style="color: dimgrey;margin-top: 100px;margin-left: 20px"> Click below to add document to this folder.
+              </div>
+              <div></div>
+            </div>
+            <div>
+
+              <label class="btn btn-primary btn-file">
+                Browse
+                <input type="file" (change)="selectFileBrowse($event)" ng2FileSelect [uploader]="uploader"/>
+              </label></div>
+            <div style="color: dimgrey"> OR
+            </div>
+            <div style="color: dimgrey"> Drag and drop here
+            </div>
+
+
+          </div>
+          <div class="col-sm-2"><label class="font-weight-bold leftMargin mr-sm-3">Document Types</label> &nbsp; &nbsp;</div>
+          <div class="col-sm-3"><select class="custom-select form-control mb-2 mr-sm-4 fontStyle" [(ngModel)]="type" (change)="optionIsNull=false"
+                                        required>
+            <option value="select" selected>---Select---</option>
+            <option value="MainDocument">Main Document</option>
+            <option value="SupportingDocument">Supporting Document</option>
+          </select>
+
+            <div>
+              <table>
+                <caption></caption>
+                <thead class="thead-dark">
+                  <tr>
+                    <th style="width: 20%"></th>
+                    <th style="width: 20%"></th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let temitem of temfiles;let i= index">
+                    <td><strong>{{ temfiles[i].name }}</strong></td>
+
+                    <td>
+                      <em class="fa fa-trash" (click)="remove(i)"></em>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <br>
+
+
+        <div class="modal-footer">
+
+          <button style="float: right;margin-right: 1%;width: 8%;" type="submit" [disabled]="optionIsNull" class="btn btn-success" style="float:right;margin-right: 5%" (click)="upload()">Add
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

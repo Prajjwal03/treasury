@@ -1,0 +1,58 @@
+.unlockButton {
+  position: absolute;
+  background-color: #004831;
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 13px;
+  right: 1px !important;
+  top: -40px;
+}
+
+.customButton {
+  background-color: #004831 !important;
+  border: none !important;
+  color: white !important;
+  padding: 3px 26px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  margin-right: 10px !important;
+  margin-bottom: 11px !important;
+  margin-top: 1px !important;
+}
+
+.customButton:hover {
+  color: #fff;
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+
+.btn:hover {
+  color: #fff;
+}
+
+.watchbutton {
+  position: absolute;
+  background-color: #004831;
+  border: none;
+  color: white;
+  padding: 6px 8px;
+  text-align: center;
+  font-size: 13px;
+  right: 1px !important;
+  top: -40px;
+}
+
+.createbutton {
+  position: absolute;
+  background-color: #004831;
+  border: none;
+  color: white;
+  padding: 6px 21px;
+  text-align: center;
+  font-size: 13px;
+  right: 127px !important;
+  top: -40px;
+}
+/*# sourceMappingURL=button.css.map */

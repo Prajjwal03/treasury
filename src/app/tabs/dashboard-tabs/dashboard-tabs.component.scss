@@ -1,0 +1,26 @@
+.todoTabs .nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  background-color: #004831;
+  font-weight: bold;
+  color: #fff !important;
+  border-bottom: 1px solid #004831 !important;
+  border-top: transparent;
+  border-right: transparent;
+  border-left: transparent;
+  cursor: pointer !important;
+}
+
+.todoTabs .nav-tabs .nav-link {
+  background-color: #fff;
+  color: #2f4f2f;
+  font-weight: bold;
+  border: none;
+  border-bottom: 1px solid #2f4f2f;
+  cursor: pointer !important;
+}
+
+.tab-close {
+  color: gray;
+  text-align: right;
+  cursor: pointer;
+}

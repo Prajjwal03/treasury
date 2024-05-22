@@ -1,0 +1,156 @@
+<div class="dynmcTab">
+  <ul class="nav nav-tabs">
+    <li class="nav-item" id="openTab" *ngFor="let tab of tabs" (click)="selectTab(tab);closeActiveTab()">
+      <a class="nav-link" [ngClass]="{active: tab.active}"> {{ tab.title }} </a>
+    </li>
+    <!-- dynamic tabs -->
+    <li class="nav-item" *ngFor="let tab of dynamicTabs" (click)="selectTab(tab)">
+      <a class="nav-link" #myDiv [ngClass]="{active: tab.active}">
+        {{ tab.title }}
+        <span class="tab-close" *ngIf="tab.isCloseable" (click)="closeTab(tab);unlocktab(tab)">
+          <i class="fa fa-lock" aria-hidden="true" *ngIf="tab.LockStatus=='Y'"></i>
+          x
+        </span>
+        <span id={{tab.dataContext.pid}} class="tab-close hidden" (click)="close(tab)">
+          <i class="fa fa-lock" aria-hidden="true" *ngIf="tab.dataContext.LockStatus=='Y'"></i>
+          x
+        </span>
+      </a>
+    </li>
+  </ul>
+</div>
+<ng-content></ng-content>
+<ng-template dynamic-tabs #container>
+
+</ng-template>
+<button id="openModalButton" [hidden]="true" data-toggle="modal" data-target="#modelIDSubmit">Open Modal</button>
+<div class="modal fade" id="modelIDSubmit" data-backdrop="static" data-keyboard="false" role="dialog">
+  <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;">
+  </iframe>
+  <div class="modal-dialog">
+    <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;">
+    </iframe>
+    <div class="modal-content content-modal">
+      <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+              style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;">
+      </iframe>
+      <div class="modal-body">
+        <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+        <div class="text-center">
+          <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          <strong>{{ transactionRefNo }}</strong>
+        </div>
+        <div class="text-center">
+          <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          {{ modalMessage }}
+        </div>
+
+        <div>
+          <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          <div class="modal-footer footer-modal">
+            <iframe id="pdf" class="cover" title="Viewer" src="about:blank"
+                    style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+            <button class="customButton btn footerBtn" (click)="autoClose()" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button id="openModalButtonForSave" [hidden]="true" data-toggle="modal" data-target="#modelIDSubmitSave">Open
+  Modal
+</button>
+<div class="modal fade" id="modelIDSubmitSave" data-backdrop="static" data-keyboard="false" role="dialog">
+  <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+  <div class="modal-dialog">
+    <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+            style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+    <div class="modal-content content-modal">
+      <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+              style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+      <div class="modal-body">
+        <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+                style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+        <div class="text-center">
+          <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          <strong>{{ transactionRefNo }}</strong>
+        </div>
+        <div class="text-center">
+
+          <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          {{ modalMessage }}
+        </div>
+
+        <div>
+          <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+                  style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+          <div class="modal-footer footer-modal">
+            <button class="customButton btn footerBtn" data-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for delete -->
+<button id="openModalButtonDelete" [hidden]="true" data-toggle="modal" data-target="#modelIDSubmitDelete">
+  Open Modal
+</button>
+
+<div class="modal modal1 fade" id="modelIDSubmitDelete" data-backdrop="static" data-keyboard="false" role="dialog">
+  <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Transaction will be deleted.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button (click)="deleteTransaction()" type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal for not saving -->
+<button id="openModalButtonNotSave" [hidden]="true" data-toggle="modal" data-target="#modelIDSubmitNotSave">
+  Open Modal
+</button>
+
+<div class="modal modal1 fade" id="modelIDSubmitNotSave" data-backdrop="static" data-keyboard="false" role="dialog">
+  <iframe id="pdf1" class="cover" title="Viewer" src="about:blank"
+          style="border: currentColor; border-image: none; width: 100%; height: 100%; position: absolute;"></iframe>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Transaction will be closed without saving data.</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure to continue?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn btn-danger" data-dismiss="modal">Cancel</button>
+        <button (click)="NotSave()" type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

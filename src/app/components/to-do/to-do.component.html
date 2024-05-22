@@ -1,0 +1,344 @@
+<div class="container pageHeight">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+  </ngx-loading>
+  <div class=" searchdiv" style="position: -webkit-sticky; position: sticky;top: 0px;background-color: #ffffff;">
+    <div class="row  row-last">
+      <div *ngIf="clearFlag">
+        <div *ngIf="clearFlag" class="col-md-1 col-sm-6 col-xs-12 outerControlDiv">
+          <div class="form-group errorMessageHoverDiv tooltipstered">
+            <div class="row">
+              <button class="btn customButton dropdown-toggle" type="button" data-toggle="dropdown"><em
+                class="fa fa-filter"></em></button>
+              <ul class="dropdown-menu ">
+                <li class="dropdown-menu-li " *ngFor="let items of modalBodyFilterValues">{{ items }}</li>
+                <div>
+                  <button class="btn customButton dropdown-menu-btn" type="button"
+                          (click)="onReset()">Clear
+                  </button>
+                </div>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="searchFlag" class="col-md-2 col-sm-6 col-xs-12 outerControlDiv">
+        <div class="form-group errorMessageHoverDiv tooltipstered">
+          <div class="row">
+            <label class="control-label labelStyle  col-sm-12" for="2e6a6159">Search Fields</label>
+            <div class="controls col-sm-12">
+              <select (change)="setDropDownType(field)" type="dropdown" class="form-control dropdown-btn"
+                      [(ngModel)]="field" name="searchField">
+                <option value="Select" disabled>Select</option>
+                <option *ngFor="let field of searchField;let i=index" value={{field.NameToDisplay}}>
+                  {{ field.NameToDisplay }}
+                </option>
+              </select>
+              <div class="icon">
+                <em class="fa fa-chevron-down "></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="searchFlag" class="col-md-2 col-sm-6 col-xs-12 outerControlDiv">
+        <div class="form-group errorMessageHoverDiv tooltipstered">
+          <div class="row">
+            <label class="control-label labelStyle  col-sm-12" for="2e6a6159">Search Field Value</label>
+            <div class="controls col-sm-12">
+              <em *ngIf="valueType =='Date'" class="fa fa-calendar"></em>
+              <input *ngIf="valueType=='Text'" id="i" [(ngModel)]="value" name="value" type="text"
+                     class="form-control">
+              <select *ngIf="valueType=='DropDown'" type="dropdown" class="form-control dropdown-btn"
+                      [(ngModel)]="value" name="value">
+                <option value="Select" disabled selected>Select</option>
+                <option *ngFor="let field of dropDownValue;let i=index" value={{field}}>
+                  {{ field }}
+                </option>
+              </select>
+              <div class="icon" *ngIf="valueType=='DropDown'">
+                <em class="fa fa-chevron-down "></em>
+              </div>
+              <div *ngIf="valueType =='Date'" class="input-wrapper">
+                <input [(ngModel)]="value" autocomplete="off" #dateRangePicker id="calendar-input1"
+                       class="date-range-picker dateRangePicker1 form-control dateSize" type="text"
+                       [locale]="{applyLabel: 'ok', format: ' DD-MMM-YYYY',position:'left'}"
+                       ngxDaterangepickerMd [opens]="opens" [drops]="drops"
+                       (change)="setDate($event,value)" placeholder="Select Date " [attr.disabled]="isDisabled ? '' : null"/>
+              </div>
+              <ng-multiselect-dropdown (onDeSelect)="onDeselect(value)" *ngIf="valueType =='Multi'"
+                                       class=" fontStyle input-lg " [(ngModel)]="value" name="value"
+                                       [data]="multiSelectDropdown" [settings]="dropdownSettings">
+              </ng-multiselect-dropdown>
+              <div class="icon" *ngIf="valueType=='Multi'">
+                <em class="fa fa-chevron-down "></em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+
+        <label *ngIf="searchFlag && isValueTodayDealsEnabled" class="customButton checkboxToValueDate" background-color:="">
+          <input type="checkbox" [(ngModel)]="isChecked"  (change)="loadDetails(false)">  Value Today Deals
+        </label>
+        <button *ngIf="searchFlag" class="customButton btn search"
+                (click)=" sessionValidation();setSearch();setFilterForSearch()"><em class="fa fa-search"></em>
+        </button>
+
+        <button class="customButton btn" (click)="sessionValidation();onReset()">Reset</button>
+        <button *ngIf="modalFlag" class="customButton btn" (click)=" sessionValidation();example()"
+                data-toggle="modal" data-target="#todoSearch"><em class="fas fa-filter" data-toggle="modal"
+                                                                  data-target="#todoSearch"></em>Advanced
+        </button>
+        <button class="customButton btn" (click)=" sessionValidation(); refresh()"><em class="fa fa-undo"></em>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="buttoncreate">
+      <input type="button" class="customButton btn" value="Add to Watchlist"
+             (click)="sessionValidation();addToWatchList()" [disabled]="!tableFlag"/>
+      <input type="button" class="customButton btn" value="Unlock" (click)=" sessionValidation();unLockWorkItem()"
+             [disabled]="!tableFlag"/>
+      <input *ngIf="createFlag" type="button" class="customButton btn" value="Create"
+             (click)=" sessionValidation();createTransaction.emit(userRoleDetails[0]);"/>
+
+    </div>
+
+
+  </div>
+
+
+  <div *ngIf="resultFlag" class="alert  text-center" role="alert">
+    <strong>No Record Found</strong>
+  </div>
+
+  <div *ngIf="tableFlag ">
+    <table class="table table-responsive table-striped table-bordered table-sm">
+      <caption></caption>
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th></th>
+          <th *ngFor="let field of tableField | paginate:config">{{ field.NameToDisplay }}<em
+            *ngIf="field.SortFlag=='Y'" (click)="sort(field.FieldNameAlias)"
+            class="fa fa-fw fa-sort"></em></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngFor="let item of myTodoDataMap;let i = index ">
+          <td><input id={{dynamicID[i]}} value={{item}} type="checkbox"
+                     (click)='unChecked(item.ProcessInstanceID,dynamicID[i])'></td>
+
+          <td>
+            <em class="fa fa-lock" aria-hidden="true" *ngIf="myTodoDataMap[i]['LockStatus']=='Y'"></em>
+          </td>
+          <td *ngFor="let field of tableField">
+            <div *ngIf="field.FieldType!='Date' && field.FieldType!='DateTime'">
+              <div *ngIf="field.NameToDisplay==='Initiated By'">
+                {{ myTodoDataMap[i]["CreatedByName"] }}
+              </div>
+              <div *ngIf="field.NameToDisplay==='Locked By'">
+                {{ myTodoDataMap[i]["LockedByName"] }}
+              </div>
+              <div *ngIf="field.NameToDisplay==='AutoUpdateFailureDesc' && (roleName =='Operation Maker' || roleName == 'Operation Checker')">
+                {{ myTodoDataMap[i]["AutoUpdateFailureDesc"] }}
+              </div>
+              <div *ngIf="field.FieldNameAlias==='AutoUpdateFailureDesc'">
+                <em class="fa fa-exclamation" aria-hidden="true" *ngIf="(roleName === 'Treasury Maker' || roleName === 'Treasury Checker') && myTodoDataMap[i]['AutoUpdateFailureDesc'] !== undefined && myTodoDataMap[i]['AutoUpdateFailureDesc'] !== null &&
+                                   myTodoDataMap[i]['AutoUpdateFailureDesc'] !== ''" [title]="myTodoDataMap[i].AutoUpdateFailureDesc"
+                    [ngStyle]="{'color': 'red'}"></em>
+                {{ myTodoDataMap[i]["field.FieldNameAlias"] }}
+              </div>
+              <div *ngIf=" field.FieldNameAlias=='TransactionID' ">
+
+                <a (click)="sessionValidation();itemSelected.emit(myTodoDataMap[i])" class="a-table"
+                   role="button" tabindex="0">
+                  {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] }}</a>
+              </div>
+              <div *ngIf=" field.FieldNameAlias=='RelatedT24RefNo' ">
+                <a (click)="sessionValidation();relatedT24NoSelect(myTodoDataMap[i])" class="a-table"
+                   role="button" tabindex="0">
+                  {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] }}</a>
+              </div>
+              <div
+                *ngIf="(field.FieldNameAlias=='Buy_Side_Amount' || field.FieldNameAlias=='CCY1_Outstanding_Amount' || field.FieldNameAlias=='CCY2_Outstanding_Amount' || field.FieldNameAlias=='Sell_Side_Amount')">
+                {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] }}
+              </div>
+              <div *ngIf="field.FieldNameAlias=='Exchange_Rate'">
+                {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] | number:'1.8' }}
+              </div>
+              <!-- Highlight the Exception (Transaction sub type) with a red background color, 50% opacity, bold font, and black font color -->
+              <div *ngIf="field.FieldNameAlias=='TxnSubTypeName'" [ngStyle]="{
+                'background-color': myTodoDataMap[i]['TxnSubTypeName'] == 'Exception' ? 'rgba(255, 0, 0, 0.7)' : 'inherit',
+                'font-weight': myTodoDataMap[i]['TxnSubTypeName'] == 'Exception' ? 'bold' : 'normal',
+                'color': myTodoDataMap[i]['TxnSubTypeName'] == 'Exception' ? 'white' : 'inherit'}"> 
+                {{myTodoDataMap[i][field.FieldNameAlias | removewhitespaces]}}
+              </div>
+              <div
+                *ngIf="field.FieldNameAlias !='TransactionID' && field.FieldNameAlias !='TotalAmount'
+                                && field.FieldNameAlias !='RelatedT24RefNo' && field.FieldNameAlias !='Exchange_Rate'
+                                && field.FieldNameAlias !='Buy_Side_Amount' && field.FieldNameAlias !='CCY1_Outstanding_Amount'
+                                && field.FieldNameAlias !='CCY2_Outstanding_Amount' && field.FieldNameAlias !='Sell_Side_Amount' && field.FieldNameAlias!='TxnSubTypeName' && field.NameToDisplay!='Locked By' && field.NameToDisplay!='Initiated By' && field.FieldNameAlias!='AutoUpdateFailureDesc' && field.NameToDisplay!='AutoUpdateFailureDesc'">
+                {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] }}
+              </div>
+              <div *ngIf="field.FieldNameAlias=='TotalAmount'">
+                {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] | currency:'USD':'' }}
+              </div>
+            </div>
+            <div *ngIf="field.FieldType=='DateTime'"><em *ngIf=" field.FieldNameAlias=='TransactionID'"
+                                                         class="fa fa-lock" aria-hidden="true"></em>
+              {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] | date:' dd-MMM-y HH:mm' }}
+            </div>
+            <div *ngIf="field.FieldType=='Date'"><em *ngIf=" field.FieldNameAlias=='TransactionID'"
+                                                     class="fa fa-lock" aria-hidden="true"></em>
+              {{ myTodoDataMap[i][field.FieldNameAlias| removewhitespaces] | date:' dd-MMM-y ' }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="tableFlag">
+      <pagination-controls id="Todo_id" (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="todoSearch" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="todoSearch">Advanced Filter Criteria
+        </h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="row  row-last">
+          <div class="col-md-4 col-sm-6 col-xs-12 outerControlDiv">
+            <div class="form-group errorMessageHoverDiv tooltipstered">
+              <div class="row">
+
+                <div class="controls col-sm-12">
+                  <select (change)="setModalDropDownType(modalField)" type="dropdown"
+                          class="form-control dropdown-btn" [(ngModel)]="modalField" name="modalField">
+                    <option value="Select" disabled>Select</option>
+                    <option *ngFor="let field of searchField;let i=index"
+                            value={{field.NameToDisplay}}>
+                      {{ field.NameToDisplay }}
+                    </option>
+                  </select>
+                  <div class="icon">
+                    <em class="fa fa-chevron-down "></em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12 outerControlDiv">
+            <div class="form-group errorMessageHoverDiv tooltipstered">
+              <div class="row">
+                <div class="controls col-sm-12">
+                  <em *ngIf="modalValueType =='Date'" class="fa fa-calendar"></em>
+                  <input *ngIf="modalValueType=='Text'" id="i" [(ngModel)]="modalValue"
+                         name="modalValue" type="text" class="form-control">
+                  <select *ngIf="modalValueType=='DropDown'" type="dropdown"
+                          class="form-control dropdown-btn" [(ngModel)]="modalValue" name="modalValue">
+                    <option value="Select" disabled selected>Select</option>
+                    <option *ngFor="let field of dropDownValue;let i=index" value={{field}}>
+                      {{ field }}
+                    </option>
+                  </select>
+                  <div class="icon" *ngIf="modalValueType=='DropDown'">
+                    <em class="fa fa-chevron-down "></em>
+                  </div>
+                  <div *ngIf="modalValueType =='Date'" class="input-wrapper">
+                    <input [(ngModel)]="modalValue" autocomplete="off" #dateRangePicker
+                           id="calendar-input1"
+                           class="date-range-picker dateRangePicker1 form-control dateSize" type="text"
+                           [locale]="{applyLabel: 'ok', format: ' DD-MMM-YYYY',position:'left'}"
+                           ngxDaterangepickerMd [opens]="opens" [drops]="drops"
+                           (change)="setDateForModal($event)" placeholder="Select Date "/>
+                  </div>
+
+                  <ng-multiselect-dropdown (onDeSelect)="onDeselect(modalValue)"
+                                           *ngIf="modalValueType =='Multi'" class=" fontStyle input-lg "
+                                           [(ngModel)]="modalValue" name="value" [data]="multiSelectDropdown"
+                                           [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                  <div class="icon" *ngIf="modalValueType=='Multi'">
+                    <em class="fa fa-chevron-down "></em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12 outerControlDiv">
+            <div class="form-group errorMessageHoverDiv tooltipstered">
+              <div class="row">
+                <div class="controls col-sm-12">
+                  <button class="customButton btn mdlBtn"
+                          (click)="exampleSetFilter(modalValue,modalField)"><em class="fa fa-plus"></em>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div>
+
+          <div *ngIf="alertFlag" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Please Select Filter Value For {{ modalField }}
+            <button (click)="alertClose()" type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div *ngIf="combinationAlertFlag" class="alert alert-danger alert-dismissible fade show"
+               role="alert">
+            Combinations are already present
+            <button (click)="alertClose()" type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div *ngIf="maxFilterFlag" class="alert alert-danger alert-dismissible fade show" role="alert">
+            Maximum limit reached
+            <button (click)="maxFilteralertClose()" type="button" class="close" data-dismiss="alert"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="row  row-last">
+            <div class="col-md-6 col-sm-6 col-xs-12 outerControlDiv"
+                 *ngFor="let items of modalBodyFilterValues;let i=index">
+              <div class="form-group errorMessageHoverDiv tooltipstered">
+                <div class="row">
+                  <div class="controls col-sm-12">
+                    {{ items }} <em (click)="deleteModalValue(items,i)" class="fa fa-times"></em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="customButton btn footerBtn" (click)="setModalSearch()"
+                data-dismiss="modal">Apply
+        </button>
+        <button class="customButton btn footerBtn" (click)="removemodalBodyFilterValues()">Remove All</button>
+        <button class="customButton btn footerBtn" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<span id="TeamToDoRefreshingPage" class=" hidden" (click)="refresh()"><em class="fa fa-lock" aria-hidden="true"></em>
+    x</span>

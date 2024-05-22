@@ -1,0 +1,19 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }">
+</ngx-loading>
+<app-tabs>
+  <simple-notifications id="simpleNotification"></simple-notifications>
+  <app-tab [tabTitle]="'Enquiry'">
+    <simple-notifications id="simpleNotification"></simple-notifications>
+    <app-enquiry (itemSelected)="itemSelected($event) " (createTransaction)="createTransaction($event)">
+    </app-enquiry>
+    <hr/>
+  </app-tab>
+</app-tabs>
+
+
+<ng-template let-instruction="instruction" #instructionEdit>
+
+  <app-enquiry-edit [instruction]="instruction" (itemSelected)="itemSelected($event) ">
+  </app-enquiry-edit>
+
+</ng-template>

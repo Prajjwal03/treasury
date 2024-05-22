@@ -1,0 +1,56 @@
+<div class="container pageHeight">
+  <div class=" searchdiv" style="position: -webkit-sticky; position: sticky;top: 0px;background-color: #ffffff;">
+    <div class="row  row-last">
+      <div class="col-md-2 col-sm-6 col-xs-12 outerControlDiv">
+        <div class="form-group errorMessageHoverDiv tooltipstered">
+          <div class="row">
+            <label class="control-label labelStyle  col-sm-12" for="2e6a6159">Search Report</label>
+            <div class="controls col-sm-12">
+              <input id="i" [(ngModel)]="value" name="value" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button">
+        <button style="width: 33px !important;height: 27px !important;" class="customButton btn" (click)="sessionValidation();search()">
+          <em class="fa fa-search"></em>
+        </button>
+        <button style="width: 54px !important;height: 27px !important;" class="customButton btn"
+                (click)="sessionValidation();onReset()">Reset
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="resultFlag" class="alert  text-center" role="alert">
+    <strong>No Record Found</strong>
+  </div>
+  <div *ngIf="tableFlag">
+    <div class="table-responsive">
+      <table class="table table-responsive responsive-table table-hover  table-fixed">
+        <caption></caption>
+        <thead class="thead-dark">
+          <tr>
+            <th class="width-1"></th>
+            <th class="width-1">Type</th>
+            <th class="width-1">Report Name<em (click)="sort()" class="fa fa-fw fa-sort"></em></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let arr of ReportNameArray" (click)="sessionValidation();createTabReport.emit(arr)">
+            <td>
+            </td>
+            <td>
+              <em class="fa fa-file" aria-hidden="true"></em>
+            </td>
+            <td>
+              <a class="a-table" role="button" tabindex="0">
+                {{ arr.reportName }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
